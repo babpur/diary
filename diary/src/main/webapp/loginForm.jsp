@@ -112,16 +112,17 @@
 			text-align: right;
 			margin-right: 10px;
 		}
-		.login-container {
-			text-align: right;
+		.fieldset-container {
+			margin-top: 120px;
+			justify-content: center;
 			display: flex;
 		}
 		fieldset {
-			text-align: center;
-			margin-top: 120px;
+			justify-content: center;
+			font-size: 40px;
 		}
 		legend {
-			
+			font-size: 70px;
 		}
 		.link-container {
 			text-align: center;
@@ -141,14 +142,26 @@
 		.sun {
 			color: #FF0000;
 		}
+		button {
+			margin: 2px;
+			width: 70px;
+			height: 70px;
+		}
 	</style>
 
 </head>
 
-<body class="font">
-	<div class="login-container">
+<body>
+	<nav class="navbar navbar-dark bg-dark">
+		<div class="navbar-nav">
+		    <a class="nav-link active font" aria-current="page" 
+		    	style="color: #FFFFFF;">DIARY</a>
+	    </div>
+	</nav><br>
+
+	<div class="fieldset-container font">
 	<fieldset>
-	<form>
+	<form method="post" action="/diary/loginAction.jsp">
 	<legend>로그인</legend>	
 		<table>
 			<tr>
@@ -163,16 +176,16 @@
 				<td><input type="password" name=memberPw placeholder="비밀번호를 입력해 주세요"></td>
 			</tr>		
 		</table>
+		<div>
+		<%
+			if(errMsg != null){
+		%>
+				&#128204 <%=errMsg%> 
+		<%		
+			}
+		%>
+		</div>
 	</form>
-	<div>
-						<%
-							if(errMsg != null){
-						%>
-								&#128204 <%=errMsg%> 
-						<%		
-							}
-						%>
-	</div>
 	</fieldset>
 	</div>
 </body>

@@ -168,7 +168,7 @@
 <body>
 	<nav class="navbar navbar-dark bg-dark">
 		<div class="navbar-nav">
-		    <a class="nav-link active font" aria-current="page" href="diary/diary.jsp" 
+		    <a class="nav-link active font" aria-current="page" href="/diary/diary.jsp" 
 		    	style="color: #FFFFFF;">DIARY</a>
 	    </div>
 	</nav><br>
@@ -178,7 +178,7 @@
 	</div>
 	
 	<div class="container">
-		<div class="row">
+		<div class="row p-5">
 			<div class="col"></div>
 			<div class="col-9">
 			<fieldset class="font">

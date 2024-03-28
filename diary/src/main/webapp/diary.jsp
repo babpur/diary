@@ -182,7 +182,7 @@
 	
 	<nav class="navbar navbar-dark bg-dark">
 		<div class="navbar-nav">
-		    <a class="nav-link active font" aria-current="page" href="diary/diary.jsp" 
+		    <a class="nav-link active font" aria-current="page" href="/diary/diary.jsp" 
 		    	style="color: #FFFFFF;">DIARY</a>
 	    </div>
 	</nav><br>

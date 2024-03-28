@@ -115,67 +115,70 @@
 	<link href="https://fonts.googleapis.com/css2?family=Dongle&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 	<style>
 		a {
-		text-decoration: none;
+			text-decoration: none;
 		}
 		a:link {
-		color: #000000;
+			color: #000000;
 		}
 		a:visited{
-		color: #000000;
+			color: #000000;
 		}
 		a:hover {
-		color: #FFFFFF;
-		background-color: #000000;
+			color: #FFFFFF;
+			background-color: #000000;
 		}
 		a:active {
-		color: #FFFFFF;
-		background-color: #000000;
+			color: #FFFFFF;
+			background-color: #000000;
 		}
 		h1 {
-		font-size: 40px;
+			font-size: 40px;
 		}
 		.font{
-		font-family: "Dongle", sans-serif;
-		font-weight: 400;
-		font-style: normal;
-		font-size: 30px;
-		color: #000000;
+			font-family: "Dongle", sans-serif;
+			font-weight: 400;
+			font-style: normal;
+			font-size: 30px;
+			color: #000000;
 		}
 		 html, body {
-		  margin: 5;
-		  padding: 5;
-		  width: 100%;
-		  height: 100%;
+			margin: 5;
+			padding: 5;
+			width: 100%;
+			height: 100%;
 		}
 		.head-container {
-		text-align: center;
-		margin-top: 5px;
+			text-align: center;
+			margin-top: 5px;
 		}
 		.login-container {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 		.logout-container {
-		text-align: right;
-		margin-right: 10px;
+			text-align: right;
+			margin-right: 10px;
 		}
 		fieldset {
-		justify-content: center;
+			justify-content: center;
 		}
 		legend {
-		font-size: 40px;
+			font-size: 60px;
 		}
 		table {
-		font-size: 40px;
-		width: 500px;
+			font-size: 40px;
+			width: 500px;
 		}
 		.link-container {
-		text-align: center;
+			text-align: center;
 		}
 		.searchWord {
-		text-align: center;
-		margin-top: 10px;
+			text-align: center;
+			margin-top: 10px;
+		}
+		.fieldset-container {
+			justify-content: center;
 		}
 	</style>
 </head>
@@ -193,40 +196,86 @@
 	<div class="link-container">
 		<a class="btn btn-outline-dark font" href="/diary/addDiaryForm.jsp">일기 쓰기</a>
 	</div>
-
-	<fieldset class="font">
-		<legend>일기 목록</legend>
-		<table class="table mt-2">
-			<thead>
-				<tr>
-					<td>날짜</td>
-					<td>제목</td>
-				</tr>
-			</thead>
-			<tbody>
+	
+	<div class="fieldset-container p-20">
+		<fieldset class="font">
+			<legend>일기 목록</legend>
+			<table class="table mt-2">
+				<thead>
+					<tr>
+						<td>날짜</td>
+						<td>제목</td>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						while(rs2.next()){
+					%>
+							<tr>
+								<td><a href="/diary/diaryOne.jsp?diaryDate=<%=rs2.getString("diaryDate")%>"><%=rs2.getString("diaryDate")%></a></td>
+								<td><a href="/diary/diaryOne.jsp?diaryDate=<%=rs2.getString("diaryDate")%>"><%=rs2.getString("title")%></td>
+							</tr>
+					<%		
+						}
+					%>
+				</tbody>
+			</table>
+		</fieldset>
+		
+		<form method="get" action="/diary/diaryList.jsp">
+			<div class="searchWord">
+				제목 검색 :
+				<input type="text" name="searchWord">
+				<button class="btn btn-outline-dark font" type="submit">검색</button>
+			</div>
+		</form>
+		
+		<nav aria-label="Page navigation" style="clear:both;"><br>
+			<ul class="pagination justify-content-center"
+				style="color: #FFFFFF;">
+				
 				<%
-					while(rs2.next()){
+					if (currentPage > 1) {
 				%>
-						<tr>
-							<td><a href="/diary/diaryOne.jsp?diaryDate=<%=rs2.getString("diaryDate")%>"><%=rs2.getString("diaryDate")%></a></td>
-							<td><a href="/diary/diaryOne.jsp?diaryDate=<%=rs2.getString("diaryDate")%>"><%=rs2.getString("title")%></td>
-						</tr>
+						<li class="page-item">
+							<a class="page-link" href="./boardList.jsp?currentPage=1">처음 페이지</a>
+						</li>
+						<li class="page-item">	 
+							<a class="page-link" href="./boardList.jsp?currentPage=<%=currentPage - 1%>">이전 페이지</a>
+						</li>
+				<%
+					} else {
+				%>	
+						<li class="disabled">
+							<a class="page-link" href="./boardList.jsp?currentPage=1">처음 페이지</a>
+						</li>
+						<li class=" disabled">
+							<a class="page-link" href="./boardList.jsp?currentPage=<%=currentPage - 1%>">이전 페이지</a>
+						</li>
+				<%		
+					}
+				
+					if(currentPage < lastPage) {
+				%>
+						<li class="page-item disabled">
+							<a class="page-link" href="./boardList.jsp?currentPage=<%=currentPage + 1%>">다음 페이지</a>
+						</li>
+						<li class="page-item disabled">
+							<a class="page-link" href="./boardList.jsp?currentPage=<%=lastPage+1%>">마지막 페이지</a>
+						</li>
 				<%		
 					}
 				%>
-			</tbody>
-		</table>
-	</fieldset>
-	<div class="link-container">
-		<a class="btn btn-outline-dark font" href="/diary/diaryList?currentPage=<%=currentPage-1%>">이전</a>
-		<a class="btn btn-outline-dark font" href="/diary/diaryList?currentPage=<%=currentPage+1%>">다음</a>
-	</div>
-	<form method="get" action="/diary/diaryList.jsp">
-		<div>
-			제목 검색 :
-			<input type="text" name="searchWord">
-			<button class="btn btn-outline-dark font" type="submit">검색</button>
+			</ul>
+					</nav>
+		
+		
+		
+		
+		<div class="link-container">
+			<a class="btn btn-outline-dark font" href="/diary/diaryList?currentPage=<%=currentPage-1%>">이전</a>
+			<a class="btn btn-outline-dark font" href="/diary/diaryList?currentPage=<%=currentPage+1%>">다음</a>
 		</div>
-	</form>
+	</div>
 </body>
 </html>

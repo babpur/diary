@@ -141,7 +141,7 @@
 <body>
 	<nav class="navbar navbar-dark bg-dark">
 		<div class="navbar-nav">
-		    <a class="nav-link active font" aria-current="page" href="diary/diary.jsp" 
+		    <a class="nav-link active font" aria-current="page" href="/diary/diary.jsp" 
 		    	style="color: #FFFFFF;">DIARY</a>
 	    </div>
 	</nav><br>
@@ -152,7 +152,7 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-4">
+			<div class="col-4 p-5">
 				<fieldset class="font">
 					<legend>날짜 중복 확인</legend>
 					<table class="table">
@@ -182,7 +182,7 @@
 					</fieldset>
 				</form>
 			</div>		
-			<div class="col-7">
+			<div class="col-7 p-5">
 				<fieldset class="font">
 					<legend>일기 쓰기</legend>
 					<table>

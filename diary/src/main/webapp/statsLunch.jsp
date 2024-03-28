@@ -9,7 +9,7 @@
 	
 	// where?
 	System.out.println("------------------------------");
-	System.out.println("logout.jsp");		
+	System.out.println("statsLunch.jsp");		
 		
 	// 0. 인증 분기 
 	// ㄴ login
@@ -46,6 +46,8 @@
 	}
 %>
 <%
+	String[] arrMenu = "";
+
 	// 쿼리문
 	String sql2 = "select menu, count(*) cnt from lunch group by menu";
 	

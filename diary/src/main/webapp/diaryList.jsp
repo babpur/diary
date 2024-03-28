@@ -7,7 +7,7 @@
 	
 	// where?
 	System.out.println("------------------------------");
-	System.out.println("logout.jsp");		
+	System.out.println("diaryList.jsp");		
 		
 	// 0. 인증 분기 
 	// ㄴ login

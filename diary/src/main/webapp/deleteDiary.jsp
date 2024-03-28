@@ -4,7 +4,7 @@
 <%
 	//where?
 	System.out.println("------------------------------");
-	System.out.println("updateDiaryForm.jsp");
+	System.out.println("deleteDiaryForm.jsp");
 
 	String checkDate = request.getParameter("checkDate");
 	String ck = request.getParameter("ck");

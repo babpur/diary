@@ -4,7 +4,7 @@
 <%
 	// where?
 	System.out.println("------------------------------");
-	System.out.println("diaryAction.jsp");
+	System.out.println("addDiaryAction.jsp");
 	
 	// 요청값
 	String diaryDate = request.getParameter("diaryDate");

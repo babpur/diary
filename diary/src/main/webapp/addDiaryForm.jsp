@@ -57,9 +57,9 @@
 	
 	String msg = "";
 	if(ck.equals("T")){
-		msg = "입력 가능한 날짜";
+		msg = "일기 작성이 가능합니다.";
 	} else if(ck.equals("F")){
-		msg = "입력 불가능한 날짜";
+		msg = "일기 작성이 불가능합니다.";
 	}
 %>
 
@@ -128,13 +128,22 @@
 		}
 		table {
 			font-size: 30px;
+			justify-content: center;
 		}
 		.link-container {
 			ext-align: right;
 		}
 		.searchWord {
-		text-align: center;
-		margin-top: 10px;
+			text-align: center;
+			margin-top: 10px;
+		}
+		button {
+			margin: 5px;
+		}
+		
+		.table-box {
+			width: 90%;
+			margin: auto;
 		}
 	</style>
 </head>
@@ -152,43 +161,44 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-4 p-5">
-				<fieldset class="font">
-					<legend>날짜 중복 확인</legend>
-					<table class="table">
-						<tr>
-							<td>날짜 확인</td>
-							<td><%=checkDate%></td>
-						</tr>
-						<tr>
-							<td>ck</td>
-							<td><%=ck%></td>
-						</tr>
-					</table>
-				</fieldset><br>
+			<div class="col"></div>		
+			<div class="col-12">
+			<%-- <fieldset class="font">
+				<legend>날짜 중복 확인</legend>
+				<table class="table">
+					<tr>
+						<td>날짜 확인</td>
+						<td><%=checkDate%></td>
+					</tr>
+					<tr>
+						<td>ck</td>
+						<td><%=ck%></td>
+					</tr>
+				</table>
+			</fieldset><br> --%>
 				
 				<form method="post" action="/diary/checkDateAction.jsp">
-					<fieldset class="font">
-						<legend>날짜</legend>
-						<table>
-							<tr>
-								<td>
-									<input type="date" name="checkDate" value="<%=checkDate%>"> <!-- type=date 날짜 인터페이스 제공 -->
-									<span><%=msg%></span>
-								</td>
-							</tr>
-						</table>
-						<button class="btn btn-outline-dark font" type="submit">날짜 확인</button>
-					</fieldset>
+					<table class="font">
+						<tr>
+							<td>
+								<input type="date" name="checkDate" value="<%=checkDate%>"> <!-- type=date 날짜 인터페이스 제공 -->
+							</td>
+							<td>
+								<button class="btn btn-outline-dark font" type="submit">날짜 확인</button>
+							</td>
+						</tr>
+						<tr>
+							<td><%=msg%></td>
+						</tr>
+					</table>
 				</form>
-			</div>		
-			<div class="col-7 p-5">
 				<fieldset class="font">
 					<legend>일기 쓰기</legend>
+					<form method="get" action="/diary/addDiaryAction.jsp">
 					<table>
 						<tr>
-							<td>날짜</td>
-							<td>
+							<td>날짜: </td>
+							<td class="table-box">
 								<%
 									if(ck.equals("T")){
 								%>		
@@ -203,8 +213,8 @@
 							</td>
 						</tr>
 						<tr>
-							<td>기분</td>
-							<td>
+							<td>기분: </td>
+							<td class="table-box">
 								<input type="radio" name="feeling" value="&#128512;">&#128512;
 								<input type="radio" name="feeling" value="&#128514;">&#128514;
 								<input type="radio" name="feeling" value="&#128544;">&#128544;
@@ -213,14 +223,14 @@
 							</td>
 						</tr>
 						<tr>
-							<td>제목</td>
-							<td>
+							<td>제목: </td>
+							<td class="table-box">
 								<input type="text" name="title">
 							</td>
 						</tr>
 						<tr>
-							<td>날씨</td>
-							<td>
+							<td>날씨: </td>
+							<td class="table-box">
 								<select name="weather">
 									<option value="맑음">맑음</option>
 									<option value="흐림">흐림</option>
@@ -230,14 +240,15 @@
 							</td>
 						</tr>
 						<tr>
-							<td>내용</td>
-							<td>
+							<td>내용: </td>
+							<td class="table-box">
 								<textarea name="content"></textarea>
 							</td>
 						</tr>
 					</table>
 					<button class="btn btn-outline-dark font" type="submit">작성</button>
 					<button class="btn btn-outline-dark font" type="reset">초기화</button>	
+					</form>
 				</fieldset>
 			</div>
 			<div class="col"></div>

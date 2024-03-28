@@ -50,14 +50,13 @@
 	
 	// DB -> One에 필요한 데이터
 	
-	String sql2 = "select diary_date diaryDate, title, weather, content, update_date updateDate from diary where diary_date=?";
+	String sql2 = "select diary_date, feeling, title, weather, content, update_date updateDate from diary WHERE diary_date=?";
 	
 	// stmt2 -> null
 	PreparedStatement stmt2 = null;
+	ResultSet rs2 = null;
 	stmt2 = conn.prepareStatement(sql2);
 	stmt2.setString(1, diaryDate);
-	ResultSet rs2 = null;
-	
 	rs2 = stmt2.executeQuery();
 
  %>
@@ -154,38 +153,40 @@
 		<div class="row">
 			<div class="col"></div>
 			<div class="col-7">
-				<form method="post" action="/diary/updateDiaryForm.jsp">
 				<fieldset class="font">
 					<legend>오늘의 일기</legend>
 					<table class="table table-hover">
 						<tr>
 							<td>날짜</td>
-							<td><input type="text" name="diaryDate" value='<%=diaryDate%>'></td>
+							<td><%=diaryDate%></td>
+						</tr>
+						<tr>
+							<td>기분</td>
+							<td><%=rs2.getString("feeling")%></td>
 						</tr>
 						<tr>
 							<td>제목</td>
-							<td><input type="text" name="title" value='<%=rs2.getString("title")%>'></td>
+							<td><%=rs2.getString("title")%></td>
 						</tr>
-						<tr>
+						<tr> 
 							<td>날씨</td>
-							<td><input type="text" name="weather" value='<%=rs2.getString("weather")%>'></td>
+							<td><%=rs2.getString("weather")%></td>
 						</tr>
 						<tr>
 							<td>내용</td>
-							<td><input type="text" name="content" value='<%=rs2.getString("content")%>'></td>
+							<td><%=rs2.getString("content")%></td>
 						</tr>
 						<tr>
 							<td>수정 시간</td>
-							<td><input type="text" name="updateDate" value='<%=rs2.getString("updateDate")%>'></td>
+							<td><%=rs2.getString("updateDate")%></td>
 						</tr>
 					</table>
 				</fieldset>
 				<div class="link-container">
 					<a class="btn btn-outline-dark font" href="/diary/diaryList.jsp">목록</a>
-					<button class="btn btn-outline-dark font" type="submit">수정</button>
+					<a class="btn btn-outline-dark font" href="/diary/updateDiaryForm.jsp?diaryDate=<%=diaryDate%>">수정</a>
 					<a class="btn btn-outline-dark font" href="/diary/deleteDiary.jsp?diaryDate=<%=diaryDate%>">삭제</a>
 				</div>
-				</form>
 			</div>
 			<div class="col"></div>
 		</div>

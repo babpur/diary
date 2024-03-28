@@ -8,6 +8,7 @@
 	
 	// 요청값
 	String diaryDate = request.getParameter("diaryDate");
+	String feeling = request.getParameter("feeling");
 	String title = request.getParameter("title");
 	String weather = request.getParameter("weather");
 	String content = request.getParameter("content");
@@ -57,15 +58,16 @@
 	/* INSERT INTO diary(diary_date, title, weather, content, update_date, create_date)
 	VALUES(?, ?, ?, ?, NOW(), NOW()); */
 	
-	String sql2 = "INSERT INTO diary(diary_date, title, weather, content, update_date, create_date)	VALUES(?, ?, ?, ?, NOW(), NOW())";
+	String sql2 = "INSERT INTO diary(diary_date, feeling, title, weather, content, update_date, create_date)	VALUES(?, ?, ?, ?, ?, NOW(), NOW())";
 	
 	PreparedStatement stmt2 = null;
 	stmt2 = conn.prepareStatement(sql2);
 	
 	stmt2.setString(1, diaryDate);
-	stmt2.setString(2, title);
-	stmt2.setString(3, weather);
-	stmt2.setString(4, content);
+	stmt2.setString(2, feeling);
+	stmt2.setString(3, title);
+	stmt2.setString(4, weather);
+	stmt2.setString(5, content);
 
 	System.out.println("stmt2: " + stmt2);
 	

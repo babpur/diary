@@ -46,9 +46,8 @@
 	}
 %>
 <%
-	String[] arrMenu = "";
-
-	// 쿼리문
+	
+	// 차트 쿼리문
 	String sql2 = "select menu, count(*) cnt from lunch group by menu";
 	
 	PreparedStatement stmt2 = null;
@@ -134,6 +133,10 @@
 		 .sun {
 		 	color: #FF0000;
 		 }
+		 main {
+		 	justify-content: center;
+		 	text-align: center;
+		 }
 	</style>
 	
 </head>
@@ -148,51 +151,53 @@
 	<div class="logout-container">
 		<a class="btn btn-outline-dark font right" href="/diary/logout.jsp">로그아웃</a>
 	</div>
-
-	<h1>statsLunch</h1>
-	<%
-				int maxHeight = 300; // 300 * 퍼센테이지를 하면 개별 크기 구할 수 있음
-				double totalCnt = 0; //
-				while(rs2.next()) {
-					totalCnt = totalCnt + rs2.getInt("cnt");
-				}
-				
-				rs2.beforeFirst();
-	%>			
+	<main>
+		<div class="main-container font">
+		<h1>statsLunch</h1>
+		<%
+			int maxHeight = 300; // 300 * 퍼센테이지를 하면 개별 크기 구할 수 있음
+			double totalCnt = 0; //
+			while(rs2.next()) {
+				totalCnt = totalCnt + rs2.getInt("cnt");
+			}
+			rs2.beforeFirst();
+		%>			
+		<div>
+			전체 투표수 : <%=(int)totalCnt%>
+		</div>
+		<table border="1">
+			<tr>
+				<%	
+					String[] c = {"red","orange","yellow", "green", "blue", "navy", "violet" };			
+					int i = 0;
+					while(rs2.next()){
+						double h = (int)(maxHeight * (rs2.getInt("cnt") / totalCnt));
+				%>
+					<td style="vertical-align: bottom;">
+						<div style="height: <%=h%>px; 
+									background-color:<%=c[i]%>;
+									text-align: center;">
+							<%=rs2.getInt("cnt")%>
+						</div>
+					</td>			
+				<%
+						i = i + 1;
+					}
+				%>
+			</tr>
+			<tr>	
+				<%					
+					rs2.beforeFirst(); // rs를 원래 자리로 돌림
+					while(rs2.next()){
+				%>
+						<td><%=rs2.getString("menu")%></td>
+				<%		
+					}
+				%>
+			</tr>		
+		</table>
 	
-	<div>
-		전체 투표수 : <%=(int)totalCnt%>
-	</div>
-	<table border="1">
-		<tr>
-			<%	
-				String[] c = {"red","orange","yellow", "green", "blue", "navy", "violet" };			
-				int i = 0;
-				while(rs2.next()){
-					double h = (int)(maxHeight * (rs2.getInt("cnt") / totalCnt));
-			%>
-				<td style="vertical-align: bottom;">
-					<div style="height: <%=h%>px; 
-								background-color:<%=c[i]%>;
-								text-align: center;">
-						<%=rs2.getInt("cnt")%>
-					</div>
-				</td>			
-			<%
-					i = i + 1;
-				}
-			%>
-		</tr>
-		<tr>	
-			<%					
-				rs2.beforeFirst(); // rs를 원래 자리로 돌림
-				while(rs2.next()){
-			%>
-					<td><%=rs2.getString("menu")%></td>
-			<%		
-				}
-			%>
-		</tr>		
-	</table>
+		</div>
+	</main>
 </body>
 </html>

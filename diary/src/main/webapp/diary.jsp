@@ -191,9 +191,9 @@
 		<a class="btn btn-outline-dark font right" href="/diary/logout.jsp">로그아웃</a>
 	</div>
 	<div class="link-container">
-		<a class="btn btn-outline-dark font" href="/diary/diary.jsp">다이어리 모양으로 보기</a>
-		<a class="btn btn-outline-dark font" href="/diary/diaryList.jsp">게시판 모양으로 보기</a>
-		<a class="btn btn-outline-dark font" href="/diary/addDiaryForm.jsp">일기 쓰기</a>
+		
+		<a href="/diary/diaryList.jsp" style="font-size: 50px;">&#128203;</a>
+		<a href="/diary/addDiaryForm.jsp" style="font-size: 50px;">&#128395;</a>
 	</div>
 	<div class="head-container">	
 		<h1 class="font"

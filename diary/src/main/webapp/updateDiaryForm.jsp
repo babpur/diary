@@ -75,7 +75,7 @@
 	System.out.println("weather: "+weather);
 	System.out.println("content: "+content);
 
-	String sql2 = "select diary_date diaryDate, title, weather, content, updateDate from diary where diaryDate = ?";
+	String sql2 = "select diary_date diaryDate, feeling, title, weather, content, updateDate from diary where diaryDate = ?";
 	PreparedStatement stmt2 = null;
 	ResultSet rs2 = null;
 	stmt2 = conn.prepareStatement(sql1);
@@ -203,11 +203,50 @@
 				<tr>
 					<td>기분</td>
 					<td>
-						<input type="radio" name="feeling" value="&#128512;">&#128512;
-						<input type="radio" name="feeling" value="&#128514;">&#128514;
-						<input type="radio" name="feeling" value="&#128544;">&#128544;
-						<input type="radio" name="feeling" value="&#128547;">&#128547;
-						<input type="radio" name="feeling" value="&#128564;">&#128564;
+						<%
+							if(rs2.getString("feeling").equals("&#128512;")) {
+						%>
+								<input type="radio" name="feeling" value="&#128512;" checked="checked">&#128512;
+								<input type="radio" name="feeling" value="&#128514;">&#128514;
+								<input type="radio" name="feeling" value="&#128544;">&#128544;
+								<input type="radio" name="feeling" value="&#128547;">&#128547;
+								<input type="radio" name="feeling" value="&#128564;">&#128564;
+						<%		
+							} else if(rs2.getString("feeling").equals("&#128514;")) {
+						%> 
+								<input type="radio" name="feeling" value="&#128512;">&#128512;
+								<input type="radio" name="feeling" value="&#128514;" checked="checked">&#128514;
+								<input type="radio" name="feeling" value="&#128544;">&#128544;
+								<input type="radio" name="feeling" value="&#128547;">&#128547;
+								<input type="radio" name="feeling" value="&#128564;">&#128564;
+						<%		
+							} else if(rs2.getString("feeling").equals("&#128544;")) {
+						%>
+								<input type="radio" name="feeling" value="&#128512;">&#128512;
+								<input type="radio" name="feeling" value="&#128514;">&#128514;
+								<input type="radio" name="feeling" value="&#128544;" checked="checked">&#128544;
+								<input type="radio" name="feeling" value="&#128547;">&#128547;
+								<input type="radio" name="feeling" value="&#128564;">&#128564;
+						<%		
+							} else if(rs2.getString("feeling").equals("&#128547;")) {
+						%>
+								<input type="radio" name="feeling" value="&#128512;">&#128512;
+								<input type="radio" name="feeling" value="&#128514;">&#128514;
+								<input type="radio" name="feeling" value="&#128544;">&#128544;
+								<input type="radio" name="feeling" value="&#128547;" checked="checked">&#128547;
+								<input type="radio" name="feeling" value="&#128564;">&#128564;
+						<%		
+							} else {
+						%>
+								<input type="radio" name="feeling" value="&#128512;">&#128512;
+								<input type="radio" name="feeling" value="&#128514;">&#128514;
+								<input type="radio" name="feeling" value="&#128544;">&#128544;
+								<input type="radio" name="feeling" value="&#128547;">&#128547;
+								<input type="radio" name="feeling" value="&#128564;" checked="checked">&#128564;
+						<%		
+							}
+						%>
+						
 					</td>
 				</tr>
 				<tr>
@@ -219,13 +258,40 @@
 				<tr>
 					<td>날씨</td>
 					<td>
-						<select name="weather">
-							<option value="맑음">맑음</option>
-							<option value="흐림">흐림</option>
-							<option value="비">비</option>
-							<option value="눈">눈</option>
+						<select name="weather" style="border-radius:10px;">
+							<%
+								if(rs2.getString("weather").equals("맑음")){
+							%>
+									<option value="맑음" selected>맑음</option>
+									<option value="흐림">흐림</option>
+									<option value="비">비</option>
+									<option value="눈">눈</option>
+							<% 
+								} else if (rs2.getString("weather").equals("흐림")){
+							%>
+									<option value="맑음">맑음</option>
+									<option value="흐림" selected>흐림</option>
+									<option value="비">비</option>
+									<option value="눈">눈</option>
+							<% 
+								} else if (rs2.getString("weather").equals("비")){
+							%>
+									<option value="맑음">맑음</option>
+									<option value="흐림">흐림</option>
+									<option value="비" selected>비</option>
+									<option value="눈">눈</option>
+							<% 	
+								} else {
+							%>
+									<option value="맑음">맑음</option>
+									<option value="흐림">흐림</option>
+									<option value="비">비</option>
+									<option value="눈" selected>눈</option>
+							<% 	
+								}
+							%>
 						</select>
-					</td>
+					</td>	
 				</tr>
 				<tr>
 					<td>내용</td>

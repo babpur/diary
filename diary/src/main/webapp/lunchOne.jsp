@@ -76,6 +76,7 @@
 	if(rs2.next()) {
 		// 이미 투표한 날짜: 기록 불가능		
 		response.sendRedirect("/diary/lunchOne.jsp?checkDateLunch=" + checkDateLunch + "&ck=F");
+		return;
 	} else {
 		// 빈 날짜: 기록 가능
 		response.sendRedirect("/diary/lunchOne.jsp?checkDateLunch=" + checkDateLunch + "&ck=T");
@@ -203,7 +204,7 @@
 					
 					
 					
-					<form method="post" action="/diary/lunchOne.jsp">
+					<form method="post" action="/diary/lunchAction.jsp">
 					<fieldset class="font">
 						<legend>점심 날짜</legend>
 						<table>
@@ -221,7 +222,7 @@
 			</div>
 			<div class="col">
 				<div class="fieldset-container">
-					<form method="get" action="/diary/statsLunch.jsp" class="font">
+					<form method="get" action="/diary/lunchAction.jsp" class="font">
 						<fieldset>
 						<legend>오늘 먹은 점심 메뉴</legend>
 							<div class="radio-container">

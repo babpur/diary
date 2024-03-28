@@ -185,7 +185,7 @@
 <body>
 	<nav class="navbar navbar-dark bg-dark">
 		<div class="navbar-nav">
-		    <a class="nav-link active font" aria-current="page" href="diary/diary.jsp" 
+		    <a class="nav-link active font" aria-current="page" href="/diary/diary.jsp" 
 		    	style="color: #FFFFFF;">DIARY</a>
 	    </div>
 	</nav><br>
@@ -194,87 +194,98 @@
 		<a class="btn btn-outline-dark font right" href="/diary/logout.jsp">로그아웃</a>
 	</div>
 	<div class="link-container">
-		<a class="btn btn-outline-dark font" href="/diary/addDiaryForm.jsp">일기 쓰기</a>
+		<a href="/diary/diary.jsp" style="font-size: 50px;">&#128197;</a>
+		<a href="/diary/addDiaryForm.jsp" style="font-size: 50px;">&#128395;</a>
 	</div>
 	
-	<div class="fieldset-container p-20">
-		<fieldset class="font">
-			<legend>일기 목록</legend>
-			<table class="table mt-2">
-				<thead>
-					<tr>
-						<td>날짜</td>
-						<td>제목</td>
-					</tr>
-				</thead>
-				<tbody>
-					<%
-						while(rs2.next()){
-					%>
-							<tr>
-								<td><a href="/diary/diaryOne.jsp?diaryDate=<%=rs2.getString("diaryDate")%>"><%=rs2.getString("diaryDate")%></a></td>
-								<td><a href="/diary/diaryOne.jsp?diaryDate=<%=rs2.getString("diaryDate")%>"><%=rs2.getString("title")%></td>
-							</tr>
-					<%		
-						}
-					%>
-				</tbody>
-			</table>
-		</fieldset>
-		
-		<form method="get" action="/diary/diaryList.jsp">
-			<div class="searchWord">
-				제목 검색 :
-				<input type="text" name="searchWord">
-				<button class="btn btn-outline-dark font" type="submit">검색</button>
-			</div>
-		</form>
-		
-		<nav aria-label="Page navigation" style="clear:both;"><br>
-			<ul class="pagination justify-content-center"
-				style="color: #FFFFFF;">
-				
-				<%
-					if (currentPage > 1) {
-				%>
-						<li class="page-item">
-							<a class="page-link" href="./boardList.jsp?currentPage=1">처음 페이지</a>
-						</li>
-						<li class="page-item">	 
-							<a class="page-link" href="./boardList.jsp?currentPage=<%=currentPage - 1%>">이전 페이지</a>
-						</li>
-				<%
-					} else {
-				%>	
-						<li class="disabled">
-							<a class="page-link" href="./boardList.jsp?currentPage=1">처음 페이지</a>
-						</li>
-						<li class=" disabled">
-							<a class="page-link" href="./boardList.jsp?currentPage=<%=currentPage - 1%>">이전 페이지</a>
-						</li>
-				<%		
-					}
-				
-					if(currentPage < lastPage) {
-				%>
-						<li class="page-item disabled">
-							<a class="page-link" href="./boardList.jsp?currentPage=<%=currentPage + 1%>">다음 페이지</a>
-						</li>
-						<li class="page-item disabled">
-							<a class="page-link" href="./boardList.jsp?currentPage=<%=lastPage+1%>">마지막 페이지</a>
-						</li>
-				<%		
-					}
-				%>
-			</ul>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col"></div>
+			<div class="col-7">
+				<div class="fieldset-container p-20">
+					<fieldset class="font">
+						<legend>일기 목록</legend>
+						<table class="table mt-2">
+							<thead>
+								<tr>
+									<td>날짜</td>
+									<td>제목</td>
+								</tr>
+							</thead>
+							<tbody>
+								<%
+									while(rs2.next()){
+								%>
+										<tr>
+											<td><a href="/diary/diaryOne.jsp?diaryDate=<%=rs2.getString("diaryDate")%>"><%=rs2.getString("diaryDate")%></a></td>
+											<td><a href="/diary/diaryOne.jsp?diaryDate=<%=rs2.getString("diaryDate")%>"><%=rs2.getString("title")%></a></td>
+										</tr>
+								<%		
+									}
+								%>
+							</tbody>
+						</table>
+					</fieldset>
+					
+					<form method="get" action="/diary/diaryList.jsp">
+						<div class="searchWord font">
+							제목 검색 :
+							<input type="text" name="searchWord">
+							<button class="btn btn-outline-dark font" type="submit">검색</button>
+						</div>
+					</form>
+					
+					<nav aria-label="Page navigation" style="clear:both;"><br>
+						<ul class="pagination justify-content-center "
+							style="color: #FFFFFF;">
+							
+							<%
+								if (currentPage > 1) {
+							%>
+									<li class="page-item">
+										<a class="page-link btn btn-outline-dark font m-1" href="/diary/diaryList.jsp?currentPage=1&searchWord=<%=searchWord%>">처음</a>
+									</li>
+									<li class="page-item">	 
+										<a class="page-link btn btn-outline-dark font m-1" href="/diary/diaryList.jsp?currentPage=<%=currentPage - 1%>&searchWord=<%=searchWord%>">이전</a>
+									</li>
+							<%
+								} else {
+							%>	
+									<li class="page-item disabled">
+										<a class="page-link btn btn-outline-dark font m-1" href="/diary/diaryList.jsp?currentPage=1&searchWord=<%=searchWord%>">처음</a>
+									</li>
+									<li class="page-item disabled">
+										<a class="page-link btn btn-outline-dark font m-1" href="/diary/diaryList.jsp?currentPage=<%=currentPage - 1%>&searchWord=<%=searchWord%>">이전</a>
+									</li>
+							<%		
+								}
+							
+								if(currentPage < lastPage) {
+							%>
+									<li class="page-item">
+										<a class="page-link btn btn-outline-dark font m-1" href="/diary/diaryList.jsp?currentPage=<%=currentPage + 1%>&searchWord=<%=searchWord%>">다음</a>
+									</li>
+									<li class="page-item">
+										<a class="page-link btn btn-outline-dark font m-1" href="/diary/diaryList.jsp?currentPage=<%=lastPage+1%>&searchWord=<%=searchWord%>">마지막</a>
+									</li>
+							<%		
+								} else {
+							%>
+									<li class="page-item disabled">
+										<a class="page-link btn btn-outline-dark font m-1" href="/diary/diaryList.jsp?currentPage=<%=currentPage + 1%>&searchWord=<%=searchWord%>">다음</a>
+									</li>
+									<li class="page-item disabled">
+										<a class="page-link btn btn-outline-dark font m-1" href="/diary/diaryList.jsp?currentPage=<%=lastPage+1%>&searchWord=<%=searchWord%>">마지막</a>
+									</li>
+							<%		
+								}
+							%>
+						</ul>
 					</nav>
-		
-		
-		
-		
-		<div class="link-container">
-			<a class="btn btn-outline-dark font" href="/diary/diaryList?currentPage=<%=currentPage-1%>">이전</a>
-			<a class="btn btn-outline-dark font" href="/diary/diaryList?currentPage=<%=currentPage+1%>">다음</a>
+				</div>
+			</div>
+			<div class="col"></div>
 		</div>
 	</div>
 </body>

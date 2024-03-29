@@ -7,42 +7,22 @@
 	System.out.println("------------------------------");
 	System.out.println("diary.jsp");
 	
-
-	//인증 분기
-	// ㄴ login
-	
-	// diary.login.my_session => 'ON' -> ON or 'OFF' -> redirect("loginForm.jsp")
-	// db	table	col
-	
-	// ------------------------------
-	String sql1 = "select my_session mySession from login";
-	// DB상 my_session을 mySession으로 가져오겠다.
 	
 	Class.forName("org.mariadb.jdbc.Driver");
 	
-	// 변수 초기화
+
 	Connection conn = null;
-	PreparedStatement stmt1 = null;
-	ResultSet rs1 = null;
-	
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
-	stmt1 = conn.prepareStatement(sql1);
-	
-	rs1 = stmt1.executeQuery();
-	
-	String mySession = null;
-	if(rs1.next()){
-		mySession = rs1.getString("mySession");	
-	}
-	if(mySession.equals("OFF")){
+	 
+	String loginMember = (String)(session.getAttribute("loginMember"));
+	if(loginMember == null) {
 		String errMsg = URLEncoder.encode("잘못된 접근입니다. 로그인 먼저 해 주세요.", "utf-8");
 		// 에러 메시지(한글) 인코딩
 		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg);
-		// 에러 메시지 출력
-		return; 
-		// 해당 코드 내 return 사용: off일 시 코드를 더 이상 진행하지 말 것. ex) 메서드 종료 시 'return' 사용해 종료.
+		return;
 	}
-	
+%>
+<%	 
 	// ------------------------------------------------
 	// 달력 
 	// 출력하고자 하는 연도, 월의 값
@@ -84,17 +64,17 @@
 	
 	
 	// DB 내에서 tYear와 tMonth에 해당되는 diary 목록을 추출
-	String sql2 = "select diary_date diaryDate, day(diary_date) day, feeling, left(title,5) title from diary where year(diary_date)=? AND month(diary_date)=?";
+	String sql = "select diary_date diaryDate, day(diary_date) day, feeling, left(title,5) title from diary where year(diary_date)=? AND month(diary_date)=?";
 	
-	PreparedStatement stmt2 = null;
-	ResultSet rs2 = null;
-	stmt2 = conn.prepareStatement(sql2);
-	stmt2.setInt(1, tYear);
-	stmt2.setInt(2, tMonth+1);
+	PreparedStatement stmt = null;
+	ResultSet rs = null;
+	stmt = conn.prepareStatement(sql);
+	stmt.setInt(1, tYear);
+	stmt.setInt(2, tMonth+1);
 	
-	System.out.println(stmt2);
+	System.out.println(stmt);
 	
-	rs2 = stmt2.executeQuery();
+	rs = stmt.executeQuery();
 	
 %>
 
@@ -128,6 +108,7 @@
 			color: #FFFFFF;
 			background-color: #000000;
 		}
+		
 		h1 {
 			font-size: 50px;
 		}
@@ -138,48 +119,46 @@
 			font-size: 30px;
 			color: #000000;
 		}
-		 html, body {
-		   margin: 5;
-		   padding: 5;
-		   width: 100%;
-		   height: 100%;
-		 }
-		 .head-container {
-		 	text-align: center;
+		html, body {
+			margin: 5;
+			padding: 5;
+			width: 100%;
+			height: 100%;
+		}
+		.head-container {
+			text-align: center;
 		 	margin-top: 20px;
-		 }
-		 .calendar-container {
-		   display: flex;
-		   flex-wrap: wrap;
-		   text-align: center;
-		 }
-		 .logout-container {
+		}
+		.calendar-container {
+			display: flex;
+			flex-wrap: wrap;
+			text-align: center;
+		}
+		.logout-container {
 		 	text-align: right;
 		 	margin-right: 10px;
-		 }
-		 .link-container {
+		}
+		.link-container {
 		 	text-align: center;
-		 }
-		 .day, .cell {
-		   width: 14.2%; /* 100% / 7 days */
-		   border: 1px solid #000000;
-		   box-sizing: border-box;
-		   margin: 0.5px;
-		 }
-		 .day {
-		   font-weight: bold;
-		 }
-		 .cell {
-		   height: 100px; /* or adjust based on your content */
-		 }
-		 .sun {
-		 	color: #FF0000;
-		 }
+		}
+		.day, .cell {
+			width: 14.2%; /* 100% / 7 days */
+			border: 1px solid #000000;
+			box-sizing: border-box;
+			margin: 0.5px;
+		}
+		.day {
+			font-weight: bold;
+		}
+		.cell {
+			height: 100px; /* or adjust based on your content */
+		}
+		.sun {
+			color: #FF0000;
+		}
 	</style>
 </head>
-
 <body>
-	
 	<nav class="navbar navbar-dark bg-dark">
 		<div class="navbar-nav">
 		    <a class="nav-link active font" aria-current="page" href="/diary/diary.jsp" 
@@ -194,6 +173,7 @@
 		
 		<a href="/diary/diaryList.jsp" style="font-size: 50px;">&#128203;</a>
 		<a href="/diary/addDiaryForm.jsp" style="font-size: 50px;">&#128395;</a>
+		<a href="/diary/lunchOne.jsp" style="font-size: 50px;">&#128395;</a>
 	</div>
 	<div class="head-container">	
 		<h1 class="font"
@@ -239,14 +219,14 @@
 								
 						<%		
 								// 현재 날짜(i-startBlank)의 일기가 rs2 목록에 있는지 비교
-								while(rs2.next()){
+								while(rs.next()){
 									// 해당 날짜에 일기가 존재한다 -> 출력한다
-									if(rs2.getInt("day") == (i-startBlank)){
+									if(rs.getInt("day") == (i-startBlank)){
 						%>
 										<div>
-											<span><%=rs2.getString("feeling")%></span>
-											<a href='/diary/diaryOne.jsp?diaryDate=<%=rs2.getString("diaryDate")%>'>
-												<%=rs2.getString("title")%>...
+											<span><%=rs.getString("feeling")%></span>
+											<a href='/diary/diaryOne.jsp?diaryDate=<%=rs.getString("diaryDate")%>'>
+												<%=rs.getString("title")%>...
 											</a>
 										</div>
 						<%				
@@ -254,7 +234,7 @@
 									}
 								}
 								
-								rs2.beforeFirst(); // ResultSet의 커스 위치를 처음으로 이동
+								rs.beforeFirst(); // ResultSet의 커스 위치를 처음으로 이동
 							} else {
 						%>
 								&nbsp;

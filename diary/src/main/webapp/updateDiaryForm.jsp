@@ -12,40 +12,18 @@
 	System.out.println(checkDate);
 	System.out.println(ck);
 	
-	// 0. 인증 분기 
-	// ㄴ login
-	
-	// diary.login.my_session => 'ON' -> redirect("diary.jsp")
-	// db	table	col
-	
-	// ------------------------------
-	
-	String sql1 = "select my_session mySession from login";
-	// DB상 my_session을 mySession으로 가져오겠다.
-	
 	Class.forName("org.mariadb.jdbc.Driver");
-
-	// 변수 초기화
 	Connection conn = null;
-	PreparedStatement stmt1 = null;
-	ResultSet rs1 = null;
-	
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
-	stmt1 = conn.prepareStatement(sql1);
 	
-	rs1 = stmt1.executeQuery();
-	
-	String mySession = null;
-	if(rs1.next()){
-		mySession = rs1.getString("mySession");	
-	}
-	if(mySession.equals("OFF")) {
-		String errMsg = URLEncoder.encode("잘못된 접근입니다. 로그인 먼저 해 주세요", "utf-8");
+	// 로그인 session
+	String loginMember = (String)(session.getAttribute("loginMember"));
+	if(loginMember == null) {
+		String errMsg = URLEncoder.encode("잘못된 접근입니다. 로그인 먼저 해 주세요.", "utf-8");
+		// 에러 메시지(한글) 인코딩
 		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg);
-		return; 
-		// 해당 코드 내 return 사용: off일 시 코드를 더 이상 진행하지 말 것. ex) 메서드 종료 시 'return' 사용해 종료.
+		return;
 	}
-	
 	
 	
 	if(checkDate == null){
@@ -62,7 +40,6 @@
 		msg = "입력 불가능한 날짜";
 	}
 %>
-
 <%
 	// diaryOne -> updateDiaryForm
 	String diaryDate = request.getParameter("diaryDate");
@@ -75,15 +52,12 @@
 	System.out.println("weather: "+weather);
 	System.out.println("content: "+content);
 
-	String sql2 = "select diary_date diaryDate, feeling, title, weather, content, updateDate from diary where diaryDate = ?";
-	PreparedStatement stmt2 = null;
-	ResultSet rs2 = null;
-	stmt2 = conn.prepareStatement(sql1);
-	stmt2.setString(1, diaryDate);
-	
-	rs2 = stmt2.executeQuery();
-	
-
+	String sql = "select diary_date diaryDate, feeling, title, weather, content, updateDate from diary where diaryDate = ?";
+	PreparedStatement stmt = null;
+	ResultSet rs = null;
+	stmt = conn.prepareStatement(sql);
+	stmt.setString(1, diaryDate);
+	rs = stmt.executeQuery();
 %>
 <!DOCTYPE html>
 <html>
@@ -156,11 +130,10 @@
 		}
 		.content-container {
 			text-aling: center;
-			
 		}
 		.searchWord {
-		text-align: center;
-		margin-top: 10px;
+			text-align: center;
+			margin-top: 10px;
 		}
 	</style>
 </head>
@@ -204,7 +177,7 @@
 					<td>기분</td>
 					<td>
 						<%
-							if(rs2.getString("feeling").equals("&#128512;")) {
+							if(rs.getString("feeling").equals("&#128512;")) {
 						%>
 								<input type="radio" name="feeling" value="&#128512;" checked="checked">&#128512;
 								<input type="radio" name="feeling" value="&#128514;">&#128514;
@@ -212,7 +185,7 @@
 								<input type="radio" name="feeling" value="&#128547;">&#128547;
 								<input type="radio" name="feeling" value="&#128564;">&#128564;
 						<%		
-							} else if(rs2.getString("feeling").equals("&#128514;")) {
+							} else if(rs.getString("feeling").equals("&#128514;")) {
 						%> 
 								<input type="radio" name="feeling" value="&#128512;">&#128512;
 								<input type="radio" name="feeling" value="&#128514;" checked="checked">&#128514;
@@ -220,7 +193,7 @@
 								<input type="radio" name="feeling" value="&#128547;">&#128547;
 								<input type="radio" name="feeling" value="&#128564;">&#128564;
 						<%		
-							} else if(rs2.getString("feeling").equals("&#128544;")) {
+							} else if(rs.getString("feeling").equals("&#128544;")) {
 						%>
 								<input type="radio" name="feeling" value="&#128512;">&#128512;
 								<input type="radio" name="feeling" value="&#128514;">&#128514;
@@ -228,7 +201,7 @@
 								<input type="radio" name="feeling" value="&#128547;">&#128547;
 								<input type="radio" name="feeling" value="&#128564;">&#128564;
 						<%		
-							} else if(rs2.getString("feeling").equals("&#128547;")) {
+							} else if(rs.getString("feeling").equals("&#128547;")) {
 						%>
 								<input type="radio" name="feeling" value="&#128512;">&#128512;
 								<input type="radio" name="feeling" value="&#128514;">&#128514;
@@ -260,21 +233,21 @@
 					<td>
 						<select name="weather" style="border-radius:10px;">
 							<%
-								if(rs2.getString("weather").equals("맑음")){
+								if(rs.getString("weather").equals("맑음")){
 							%>
 									<option value="맑음" selected>맑음</option>
 									<option value="흐림">흐림</option>
 									<option value="비">비</option>
 									<option value="눈">눈</option>
 							<% 
-								} else if (rs2.getString("weather").equals("흐림")){
+								} else if (rs.getString("weather").equals("흐림")){
 							%>
 									<option value="맑음">맑음</option>
 									<option value="흐림" selected>흐림</option>
 									<option value="비">비</option>
 									<option value="눈">눈</option>
 							<% 
-								} else if (rs2.getString("weather").equals("비")){
+								} else if (rs.getString("weather").equals("비")){
 							%>
 									<option value="맑음">맑음</option>
 									<option value="흐림">흐림</option>

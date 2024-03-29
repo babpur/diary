@@ -11,51 +11,31 @@
 	System.out.println("------------------------------");
 	System.out.println("statsLunch.jsp");		
 		
-	// 0. 인증 분기 
-	// ㄴ login
-	
-	// diary.login.my_session => 'ON' -> redirect("diary.jsp")
-	// db	table	col
-	
-	// ------------------------------
-	
-	String sql1 = "select my_session mySession from login";
-	// DB상 my_session을 mySession으로 가져오겠다.
-	
 	Class.forName("org.mariadb.jdbc.Driver");
-
-	// 변수 초기화
 	Connection conn = null;
-	PreparedStatement stmt1 = null;
-	ResultSet rs1 = null;
-	
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
-	stmt1 = conn.prepareStatement(sql1);
 	
-	rs1 = stmt1.executeQuery();
-	
-	String mySession = null;
-	if(rs1.next()){
-		mySession = rs1.getString("mySession");	
-	}
-	if(mySession.equals("OFF")) {
-		String errMsg = URLEncoder.encode("잘못된 접근입니다. 로그인 먼저 해 주세요", "utf-8");
+	// 로그인 session
+	String loginMember = (String)(session.getAttribute("loginMember"));
+	if(loginMember == null) {
+		String errMsg = URLEncoder.encode("잘못된 접근입니다. 로그인 먼저 해 주세요.", "utf-8");
+		// 에러 메시지(한글) 인코딩
 		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg);
-		return; 
-		// 해당 코드 내 return 사용: off일 시 코드를 더 이상 진행하지 말 것. ex) 메서드 종료 시 'return' 사용해 종료.
+		return;
 	}
+	
 %>
 <%
 	
 	// 차트 쿼리문
-	String sql2 = "select menu, count(*) cnt from lunch group by menu";
+	String sql = "select menu, count(*) cnt from lunch group by menu";
 	
-	PreparedStatement stmt2 = null;
+	PreparedStatement stmt = null;
 	
-	stmt2 = conn.prepareStatement(sql2);
-	ResultSet rs2 = null;
+	stmt = conn.prepareStatement(sql);
+	ResultSet rs = null;
 	
-	rs2 = stmt2.executeQuery();
+	rs = stmt.executeQuery();
 %>
 <!DOCTYPE html>
 <html>
@@ -96,49 +76,48 @@
 			font-size: 30px;
 			color: #000000;
 		}
-		 html, body {
-		   margin: 5;
-		   padding: 5;
-		   width: 100%;
-		   height: 100%;
-		 }
-		 .head-container {
+		html, body {
+			margin: 5;
+			padding: 5;
+			width: 100%;
+			height: 100%;
+		}
+		.head-container {
 		 	text-align: center;
 		 	margin-top: 20px;
-		 }
-		 .calendar-container {
-		   display: flex;
-		   flex-wrap: wrap;
-		   text-align: center;
-		 }
-		 .logout-container {
-		 	text-align: right;
-		 	margin-right: 10px;
-		 }
-		 .link-container {
+		}
+		.calendar-container {
+			display: flex;
+			flex-wrap: wrap;
+			text-align: center;
+		}
+		.logout-container {
+			text-align: right;
+			margin-right: 10px;
+		}
+		.link-container {
 		 	text-align: center;
-		 }
-		 .day, .cell {
-		   width: 14.2%; /* 100% / 7 days */
-		   border: 1px solid #000000;
-		   box-sizing: border-box;
-		   margin: 0.5px;
-		 }
-		 .day {
-		   font-weight: bold;
-		 }
-		 .cell {
-		   height: 100px; /* or adjust based on your content */
-		 }
-		 .sun {
-		 	color: #FF0000;
-		 }
-		 main {
-		 	justify-content: center;
+		}
+		.day, .cell {
+			width: 14.2%; /* 100% / 7 days */
+			border: 1px solid #000000;
+			box-sizing: border-box;
+			margin: 0.5px;
+		}
+		.day {
+			font-weight: bold;
+		}
+		.cell {
+			height: 100px; /* or adjust based on your content */
+		}
+		.sun {
+			color: #FF0000;
+		}
+		main {
+			justify-content: center;
 		 	text-align: center;
-		 }
+		}
 	</style>
-	
 </head>
 <body>
 	<nav class="navbar navbar-dark bg-dark">
@@ -157,10 +136,10 @@
 		<%
 			int maxHeight = 300; // 300 * 퍼센테이지를 하면 개별 크기 구할 수 있음
 			double totalCnt = 0; //
-			while(rs2.next()) {
-				totalCnt = totalCnt + rs2.getInt("cnt");
+			while(rs.next()) {
+				totalCnt = totalCnt + rs.getInt("cnt");
 			}
-			rs2.beforeFirst();
+			rs.beforeFirst();
 		%>			
 		<div>
 			전체 투표수 : <%=(int)totalCnt%>
@@ -170,14 +149,14 @@
 				<%	
 					String[] c = {"red","orange","yellow", "green", "blue", "navy", "violet" };			
 					int i = 0;
-					while(rs2.next()){
-						double h = (int)(maxHeight * (rs2.getInt("cnt") / totalCnt));
+					while(rs.next()){
+						double h = (int)(maxHeight * (rs.getInt("cnt") / totalCnt));
 				%>
 					<td style="vertical-align: bottom;">
 						<div style="height: <%=h%>px; 
 									background-color:<%=c[i]%>;
 									text-align: center;">
-							<%=rs2.getInt("cnt")%>
+							<%=rs.getInt("cnt")%>
 						</div>
 					</td>			
 				<%
@@ -187,10 +166,10 @@
 			</tr>
 			<tr>	
 				<%					
-					rs2.beforeFirst(); // rs를 원래 자리로 돌림
-					while(rs2.next()){
+					rs.beforeFirst(); // rs를 원래 자리로 돌림
+					while(rs.next()){
 				%>
-						<td><%=rs2.getString("menu")%></td>
+						<td><%=rs.getString("menu")%></td>
 				<%		
 					}
 				%>

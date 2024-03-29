@@ -1,64 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
 <%@ page import="java.net.*"%>
-<%	// ON -> OFF로 변경
-	// 당연히 OFF 상태로는 logout.jsp 접근 안 됨.
+<%	
 	
 	// where?
 	System.out.println("------------------------------");
 	System.out.println("diaryOne.jsp");		
-		
-	// 0. 인증 분기 
-	// ㄴ login
-	
-	// diary.login.my_session => 'ON' -> redirect("diary.jsp")
-	// db	table	col
-	
-	// ------------------------------
-	
-	String sql1 = "select my_session mySession from login";
-	// DB상 my_session을 mySession으로 가져오겠다.
-	
-	Class.forName("org.mariadb.jdbc.Driver");
-
-	// 변수 초기화
+	Class.forName("org.mariadb.jdbc.Driver");	
 	Connection conn = null;
-	PreparedStatement stmt1 = null;
-	ResultSet rs1 = null;
-	
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
-	stmt1 = conn.prepareStatement(sql1);
-	
-	rs1 = stmt1.executeQuery();
-	
-	String mySession = null;
-	if(rs1.next()){
-		mySession = rs1.getString("mySession");	
-	}
-	if(mySession.equals("OFF")) {
-		String errMsg = URLEncoder.encode("잘못된 접근입니다. 로그인 먼저 해 주세요", "utf-8");
-		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg);
-		return; 
-		// 해당 코드 내 return 사용: off일 시 코드를 더 이상 진행하지 말 것. ex) 메서드 종료 시 'return' 사용해 종료.
-	}
-	
 	// ---------------------------------------
 	
+	 String loginMember = (String)(session.getAttribute("loginMember"));
+	 if(loginMember == null) {
+		String errMsg = URLEncoder.encode("잘못된 접근입니다. 로그인 먼저 해 주세요.", "utf-8");
+		// 에러 메시지(한글) 인코딩
+		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg);
+		return;
+	 }
 	// 요청값 diary.jsp에서 diaryDate 넘김
 	String diaryDate = request.getParameter("diaryDate");
 	System.out.println("diaryDate: " + diaryDate);
 	
 	// DB -> One에 필요한 데이터
 	
-	String sql2 = "select diary_date, feeling, title, weather, content, update_date updateDate from diary WHERE diary_date=?";
+	String sql = "select * from diary WHERE diary_date=?";
 	
 	// stmt2 -> null
-	PreparedStatement stmt2 = null;
-	ResultSet rs2 = null;
-	stmt2 = conn.prepareStatement(sql2);
-	stmt2.setString(1, diaryDate);
-	rs2 = stmt2.executeQuery();
-
+	PreparedStatement stmt = null;
+	ResultSet rs = null;
+	
+	stmt = conn.prepareStatement(sql);
+	stmt.setString(1, diaryDate);
+	rs = stmt.executeQuery();
+	System.out.println("stmt: " + stmt);
  %>
 <!DOCTYPE html>
 <html>
@@ -74,67 +49,67 @@
 
 	<style>
 		a {
-		text-decoration: none;
+			text-decoration: none;
 		}
 		a:link {
-		color: #000000;
+			color: #000000;
 		}
 		a:visited{
-		color: #000000;
+			color: #000000;
 		}
 		a:hover {
-		color: #FFFFFF;
-		background-color: #000000;
+			color: #FFFFFF;
+			background-color: #000000;
 		}
 		a:active {
-		color: #FFFFFF;
-		background-color: #000000;
+			color: #FFFFFF;
+			background-color: #000000;
 		}
 		h1 {
-		font-size: 40px;
+			font-size: 40px;
 		}
 		.font{
-		font-family: "Dongle", sans-serif;
-		font-weight: 400;
-		font-style: normal;
-		font-size: 30px;
-		color: #000000;
+			font-family: "Dongle", sans-serif;
+			font-weight: 400;
+			font-style: normal;
+			font-size: 30px;
+			color: #000000;
 		}
 		html, body {
-		margin: 5;
-		padding: 5;
+			margin: 5;
+			padding: 5;
 		}
 		.head-container {
-		text-align: center;
-		margin-top: 5px;
+			text-align: center;
+			margin-top: 5px;
 		}
 		.login-container {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 		.logout-container {
-		text-align: right;
-		margin-right: 10px;
+			text-align: right;
+			margin-right: 10px;
 		}
 		fieldset {
-		justify-content: center;
-		margin-top: 10px;
+			justify-content: center;
+			margin-top: 10px;
 		}
 		legend {
-		font-size: 60px;
+			font-size: 60px;
 		}
 		table {
-		font-size: 30px;
+			font-size: 30px;
 		 	
 		}
 		.link-container {
-		text-align: right;
+			text-align: right;
 		}
 		.searchWord {
-		text-align: center;
-		margin-top: 10px;
-		 }
+			text-align: center;
+			margin-top: 10px;
+		}
 		
 	</style>
 </head>
@@ -158,27 +133,27 @@
 					<table class="table table-hover">
 						<tr>
 							<td>날짜</td>
-							<td><%=diaryDate%></td>
+							<td><%=rs.getString("diary_date")%></td>
 						</tr>
 						<tr>
 							<td>기분</td>
-							<td><%=rs2.getString("feeling")%></td>
+							<td><%=rs.getString("feeling")%></td>
 						</tr>
 						<tr>
 							<td>제목</td>
-							<td><%=rs2.getString("title")%></td>
+							<td><%=rs.getString("title")%></td>
 						</tr>
 						<tr> 
 							<td>날씨</td>
-							<td><%=rs2.getString("weather")%></td>
+							<td><%=rs.getString("weather")%></td>
 						</tr>
 						<tr>
 							<td>내용</td>
-							<td><%=rs2.getString("content")%></td>
+							<td><%=rs.getString("content")%></td>
 						</tr>
 						<tr>
 							<td>수정 시간</td>
-							<td><%=rs2.getString("updateDate")%></td>
+							<td><%=rs.getString("update_date")%></td>
 						</tr>
 					</table>
 				</fieldset>

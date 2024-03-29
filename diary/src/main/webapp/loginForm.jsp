@@ -2,58 +2,26 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.*"%>
 
-<% // diary
-	// where?
-	System.out.println("------------------------------");
-	System.out.println("loginForm.jsp");		
-		
-	// 0. 인증 분기 
-	// ㄴ login
+<%
+	// session 사용
+	// login 성공 시 session에 loginMember라는 변수 생성하고 값으로 login id를 저장
+	String loginMember = (String)session.getAttribute("loginMember");
+	// loginMember라는 변수를 가져와서 String으로 형 변환
+	// session.getAttribute는 찾는 변수가 없다면 null을 반환한다. == login한 적이 없다.
+	// null == 로그아웃, null != 로그인 
+	System.out.println("loginMember: " + loginMember);
 	
-	// diary.login.my_session => 'ON' -> redirect("diary.jsp")
-	// db	table	col
-	
-	// ------------------------------
-	
-	String sql1 = "select my_session mySession from login";
-	// DB상 my_session을 mySession으로 가져오겠다.
-	
-	Class.forName("org.mariadb.jdbc.Driver");
-
-	// 변수 초기화
-	Connection conn = null;
-	PreparedStatement stmt1 = null;
-	ResultSet rs1 = null;
-	
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
-	stmt1 = conn.prepareStatement(sql1);
-	
-	rs1 = stmt1.executeQuery();
-	
-	String mySession = null;
-	if(rs1.next()){
-		mySession = rs1.getString("mySession");	
-	}
-	if(mySession.equals("ON")){
+	// loginForm 페이지는 로그아웃 상태일 때만 출력됨.
+	if(loginMember != null){
+		// login 성공 시 diary.jsp로 redirect
 		response.sendRedirect("/diary/diary.jsp");
-		rs1.close();
-		stmt1.close();
-		conn.close();
-		// 자원 반납 먼저 하고 코드 종료
-		return; 
-		// 해당 코드 내 return 사용: off일 시 코드를 더 이상 진행하지 말 것. ex) 메서드 종료 시 'return' 사용해 종료.
+		return;
 	}
-	
-	// if문에서 안 걸릴 때를 위해 if문 밖에도 자원 반납 코드 작성
-	rs1.close();
-	stmt1.close();
-	conn.close();
 	
 	// 1. 요청값 분석
 	String errMsg = request.getParameter("errMsg");
 	System.out.println("errMsg: " + errMsg);
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,82 +35,82 @@
 	<link href="https://fonts.googleapis.com/css2?family=Dongle&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 	<style>
 	a {
-	text-decoration: none;
+		text-decoration: none;
 	}
 	a:link {
-	color: #000000;
+		color: #000000;
 	}
 	a:visited{
-	color: #000000;
+		color: #000000;
 	}
 	a:hover {
-	color: #FFFFFF;
-	background-color: #000000;
+		color: #FFFFFF;
+		background-color: #000000;
 	}
 	a:active {
-	color: #FFFFFF;
-	background-color: #000000;
+		color: #FFFFFF;
+		background-color: #000000;
 	}
 	h1 {
-	font-size: 50px;
+		font-size: 50px;
 	}
 	.font{
-	font-family: "Dongle", sans-serif;
-	font-weight: 400;
-	font-style: normal;
-	font-size: 30px;
-	color: #000000;
+		font-family: "Dongle", sans-serif;
+		font-weight: 400;
+		font-style: normal;
+		font-size: 30px;
+		color: #000000;
 	}
 	html, body {
-	margin: 5;
-	padding: 5;
-	width: 100%;
-	height: 100%;
+		margin: 5;
+		padding: 5;
+		width: 100%;
+		height: 100%;
 	}
 	.head-container {
-	text-align: center;
-	margin-top: 5px;
+		text-align: center;
+		margin-top: 5px;
 	}
 	.login-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 	.logout-container {
-	text-align: right;
-	margin-right: 10px;
+		text-align: right;
+		margin-right: 10px;
 	}
 	legend {
-	font-size: 90px;
+		font-size: 90px;
 	}
 	fieldset {
-	margin-top: 120px;
+		margin-top: 120px;
 	}
 	table {
-	font-size: 40px;
+		font-size: 40px;
 	}
 	.link-container {
-	text-align: center;
+		text-align: center;
 	}
 	.day, .cell {
-	width: 14.2%; /* 100% / 7 days */
-	border: 1px solid #000000;
-	box-sizing: border-box;
-	margin: 0.5px;
+		width: 14.2%; /* 100% / 7 days */
+		border: 1px solid #000000;
+		box-sizing: border-box;
+		margin: 0.5px;
 	}
 	.day {
-	font-weight: bold;
+		font-weight: bold;
 	}
 	.cell {
-	height: 100px; /* or adjust based on your content */
+		height: 100px; /* or adjust based on your content */
 	}
 	.sun {
-	color: #FF0000;
+		color: #FF0000;
 	}
 	button {
-	margin-top: 20px;
-	width: 80px;
-	height: 80px;
+		margin-top: 20px;
+		width: 80px;
+		height: 80px;
 	}
 	</style>
 </head>
@@ -177,17 +145,17 @@
 							</td>
 						</tr>
 					</tbody>
+					<div>
+						<%
+							if(errMsg != null){
+						%>
+								&#128204 <%=errMsg%> 
+						<%		
+							}
+						%>
+					</div>
 				</table>
 			</fieldset>
-			<div>
-			<%
-				if(errMsg != null){
-			%>
-					&#128204 <%=errMsg%> 
-			<%		
-				}
-			%>
-			</div>
 			</form>	
 		</div>	
 	</form>

@@ -225,7 +225,7 @@
 						%>
 										<div>
 											<span><%=rs.getString("feeling")%></span>
-											<a href='/diary/diaryOne.jsp?diaryDate=<%=rs.getString("diaryDate")%>'>
+											<a href="/diary/diaryOne.jsp?diaryDate=<%=rs.getString("diaryDate")%>">
 												<%=rs.getString("title")%>...
 											</a>
 										</div>

@@ -6,6 +6,7 @@
 	// where?
 	System.out.println("------------------------------");
 	System.out.println("diaryOne.jsp");		
+	
 	Class.forName("org.mariadb.jdbc.Driver");	
 	Connection conn = null;
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
@@ -24,16 +25,16 @@
 	
 	// DB -> One에 필요한 데이터
 	
-	String sql = "select * from diary WHERE diary_date=?";
+	String sql1 = "SELECT diary_date diaryDate, title, weather, content, update_date updateDate, create_date createDate FROM diary WHERE diary_date = ?";
 	
-	// stmt2 -> null
-	PreparedStatement stmt = null;
-	ResultSet rs = null;
+	// stmt -> null
+	PreparedStatement stmt1 = null;
+	ResultSet rs1 = null;
 	
-	stmt = conn.prepareStatement(sql);
-	stmt.setString(1, diaryDate);
-	rs = stmt.executeQuery();
-	System.out.println("stmt: " + stmt);
+	stmt1 = conn.prepareStatement(sql1);
+	stmt1.setString(1, diaryDate);
+	rs1 = stmt1.executeQuery();
+	System.out.println("stmt1: " + stmt1);
  %>
 <!DOCTYPE html>
 <html>
@@ -101,7 +102,7 @@
 		}
 		table {
 			font-size: 30px;
-		 	
+			text-align: center;		 	
 		}
 		.link-container {
 			text-align: right;
@@ -110,6 +111,12 @@
 			text-align: center;
 			margin-top: 10px;
 		}
+		.memo-container {
+			text-align: center;
+		}
+		.comment-container {
+			text-align: center;
+			display: inline-flex;
 		
 	</style>
 </head>
@@ -131,39 +138,78 @@
 				<fieldset class="font">
 					<legend>오늘의 일기</legend>
 					<table class="table table-hover">
+						<%
+							if(rs1.next()){
+						%>	
 						<tr>
 							<td>날짜</td>
-							<td><%=rs.getString("diary_date")%></td>
-						</tr>
-						<tr>
-							<td>기분</td>
-							<td><%=rs.getString("feeling")%></td>
+							<td><%=rs1.getString("diaryDate")%></td>
 						</tr>
 						<tr>
 							<td>제목</td>
-							<td><%=rs.getString("title")%></td>
+							<td><%=rs1.getString("title")%></td>
 						</tr>
 						<tr> 
 							<td>날씨</td>
-							<td><%=rs.getString("weather")%></td>
+							<td><%=rs1.getString("weather")%></td>
 						</tr>
 						<tr>
 							<td>내용</td>
-							<td><%=rs.getString("content")%></td>
+							<td><%=rs1.getString("content")%></td>
 						</tr>
 						<tr>
 							<td>수정 시간</td>
-							<td><%=rs.getString("update_date")%></td>
+							<td><%=rs1.getString("updateDate")%></td>
 						</tr>
+						<%
+							}
+						%>	
 					</table>
-				</fieldset>
-				<div class="link-container">
+					<div class="link-container">
 					<a class="btn btn-outline-dark font" href="/diary/diaryList.jsp">목록</a>
 					<a class="btn btn-outline-dark font" href="/diary/updateDiaryForm.jsp?diaryDate=<%=diaryDate%>">수정</a>
 					<a class="btn btn-outline-dark font" href="/diary/deleteDiary.jsp?diaryDate=<%=diaryDate%>">삭제</a>
+					</div><br>
+					<div>
+						<form method="post" action="/diary/addCommentAction.jsp">
+							<div class="comment-container">
+								<input type="hidden" name="diaryDate" value="<%=diaryDate%>">						
+								<textarea class="ms-5" row="2" cols="50" name="memo"></textarea>
+								<button class="btn btn-outline-dark font link-container ms-5" type="submit">댓글 작성</button>
+							</div>
+						</form>
+					</div>
+				<%
+					String sql2 = "select comment_no commentNo, memo, create_date createDate from comment where diary_date=?";
+				
+					PreparedStatement stmt2 = null;
+					ResultSet rs2 = null;
+					
+					stmt2 = conn.prepareStatement(sql2);
+					stmt2.setString(1, diaryDate);
+					rs2 = stmt2.executeQuery();
+				%>
+				<div class="memo-container">
+					<table class="table">
+						<%
+							while(rs2.next()){
+						%>
+								<tr class="font">
+									<td><%=rs2.getString("memo") %></td>
+									<td><%=rs2.getString("createDate")%></td>
+									<td><a class="btn btn-outline-dark font"
+											href="/diary/deleteComment.jsp?commentNo=<%=rs2.getInt("commentNo")%>&diaryDate=<%=diaryDate%>">삭제</a></td>
+								</tr>
+						<%		
+							}
+						%>
+					</table>
 				</div>
+				</fieldset>
+				
 			</div>
 			<div class="col"></div>
+	
 		</div>
 	</div>
 </body>

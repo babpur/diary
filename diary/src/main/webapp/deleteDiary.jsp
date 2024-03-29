@@ -33,14 +33,13 @@
 	System.out.println("diaryDate: " + diaryDate);
 	
 	// delete
-	String sql2 = "delete from diary where diary_date=?";
+	String sql = "delete from diary where diary_date=?";
 	
-	PreparedStatement stmt2 = null;
-	stmt2 = conn.prepareStatement(sql2);
-	stmt2.setString(1, diaryDate);
+	PreparedStatement stmt = null;
+	stmt = conn.prepareStatement(sql);
+	stmt.setString(1, diaryDate);
 	
 	int row = 0;
 	
-	row = stmt2.executeUpdate();
-	response.sendRedirect("/diary/diaryList.jsp");
+	row = stmt.executeUpdate();
 %>

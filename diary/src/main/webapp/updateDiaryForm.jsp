@@ -52,7 +52,7 @@
 	System.out.println("weather: "+weather);
 	System.out.println("content: "+content);
 
-	String sql = "select diary_date diaryDate, feeling, title, weather, content, updateDate from diary where diaryDate = ?";
+	String sql = "select diary_date diaryDate, feeling, title, weather, content, update_date updateDate from diary where diary_date = ?";
 	PreparedStatement stmt = null;
 	ResultSet rs = null;
 	stmt = conn.prepareStatement(sql);
@@ -156,24 +156,22 @@
 			<div class="col-9">
 			<fieldset class="font">
 			<legend>일기 수정</legend>
+			<form method="post" action="/diary/updateDiaryAction.jsp">
 			<table>
+			
+					<%
+						if(rs.next()){
+					%>
+			
 				<tr>
 					<td>날짜</td>
 					<td>
-						<%
-							if(ck.equals("T")){
-						%>		
-								<input type="text" name="diaryDate" value="<%=checkDate%>" readonly="readonly">
-						<%
-							} else {
-						%>
-								<input type="text" name="diaryDate" value="" readonly="readonly">
-						<%
-							}
-						%>
+						<input type="text" name="diaryDate" value="<%=diaryDate%>" readonly="readonly">
 					</td>
 				</tr>
 				<tr>
+						
+					
 					<td>기분</td>
 					<td>
 						<%
@@ -225,7 +223,7 @@
 				<tr>
 					<td>제목</td>
 					<td>
-						<input type="text" name="title">
+						<input type="text" name="title" value="<%=rs.getString("title")%>">
 					</td>
 				</tr>
 				<tr>
@@ -269,13 +267,18 @@
 				<tr>
 					<td>내용</td>
 					<td>
-						<textarea name="content"></textarea>
+						<textarea name="content"><%=rs.getString("content")%></textarea>
 					</td>
 				</tr>
+			<%		
+				}
+			%>
 			</table>
 			<button class="btn btn-outline-dark font" type="submit">수정</button>
 			<button class="btn btn-outline-dark font" type="reset">초기화</button>	
+			</form>
 			</fieldset>
+
 			</div>
 			<div class="col"></div>		
 		</div>

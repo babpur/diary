@@ -130,6 +130,10 @@
 		.radio-container {
 			text-align: center;
 		}
+		.main-container {
+			vertical-align: middle;
+			text-align: center;
+		}
 	</style>
 </head>
 <body>
@@ -140,7 +144,8 @@
 		    	style="color: #FFFFFF;">DIARY</a>
 	    </div>
 	</nav><br>
-
+	
+	<div class="main-container">
 	<%
 		if(rs.next()){ //만약 투표결과가 존재할 경우 투표결과 보여주기
 			String year = diaryDate.substring(0,4);
@@ -188,13 +193,13 @@
 							
 							<input type="radio" name="menu" class="m-3" value="기타" id="menu5">&nbsp;
 								<label for="menu5">기타</label><br><br>
-								
 							<button class="btn">투표 완료</button>
 						</form>
 					</div>
 			<%
 				}
 			%>
+		</div>
 		</div>
 		<div class="col"></div>
 	</div>

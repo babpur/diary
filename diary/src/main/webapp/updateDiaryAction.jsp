@@ -38,7 +38,7 @@
 	
 		// update 쿼리
 		// ? 4개
-		String sql = "update diary set title=?, weather=?, content=?, updateDate=now() where diaryDate = ?";
+		String sql = "update diary set title= ?, weather= ?, content= ?, update_date = now() where diary_date = ?";
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
@@ -55,8 +55,8 @@
 		row = stmt.executeUpdate(); 
 		
 		if(row == 1) {
-			response.sendRedirect("diary/diaryOne.jsp?diaryDate="+diaryDate);
+			response.sendRedirect("/diary/diaryOne.jsp?diaryDate="+diaryDate);
 		} else {
-			response.sendRedirect("diary/updateDiaryForm.jsp?diaryDate="+diaryDate);			
+			response.sendRedirect("/diary/updateDiaryForm.jsp?diaryDate="+diaryDate);			
 		}
 	%>

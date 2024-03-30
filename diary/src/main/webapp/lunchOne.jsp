@@ -147,7 +147,7 @@
 	
 	<div class="main-container">
 	<%
-		if(rs.next()){ //만약 투표결과가 존재할 경우 투표결과 보여주기
+		if(rs.next()){ // 투표한 날짜가 존재한다면 기존 투표 결과를 보여주기.
 			String year = diaryDate.substring(0,4);
 			String month = diaryDate.substring(5,7);
 			String day = diaryDate.substring(8,10);
@@ -159,21 +159,21 @@
 			점심메뉴는 '<%=rs.getString("menu")%>'입니다.
 		</div><br>
 		<div>
-			<a class="" href="/diary/deleteLunchAction.jsp?diaryDate=<%=diaryDate%>">메뉴 삭제</a>&nbsp;&nbsp;
-			<a class="" href="/diary/statsLunch.jsp">전체 통계</a>
+			<a href="/diary/deleteLunchAction.jsp?diaryDate=<%=diaryDate%>">메뉴 삭제</a>&nbsp;&nbsp;
+			<a href="/diary/statsLunch.jsp">전체 통계</a>
 		</div>
 			<%
 				} else { // 투표 결과 없을 시 투표창 출력
 			%>
 					<div>점심 메뉴 선택</div>
 			<%
-					if(msg == null){
+					if(msg == null) {
 			%>
 						<div></div>
 			<%			
-					}else if(msg.equals("delete done")){
+					} else if(msg.equals("삭제 완료")){
 			%>
-						<div>삭제 성공하였습니다. <br> 다시 선택해주세요.</div>
+						<div>기존 투표 데이터 삭제 성공하였습니다. <br> 다시 선택해 주세요.</div>
 			<%
 					}
 			%>

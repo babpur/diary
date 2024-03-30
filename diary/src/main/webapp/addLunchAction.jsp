@@ -7,7 +7,7 @@
 
 	// 점심 메뉴 투표 완료 시 추가
 	
-	//값 넘어오는지 확인
+	// 값 넘어오는지 확인
 	String diaryDate = request.getParameter("diaryDate");
 	String menu = request.getParameter("menu");
 	

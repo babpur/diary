@@ -169,6 +169,7 @@
 					<a class="btn btn-outline-dark font" href="/diary/diaryList.jsp">목록</a>
 					<a class="btn btn-outline-dark font" href="/diary/updateDiaryForm.jsp?diaryDate=<%=diaryDate%>">수정</a>
 					<a class="btn btn-outline-dark font" href="/diary/deleteDiary.jsp?diaryDate=<%=diaryDate%>">삭제</a>
+					<a class="btn btn-outline-dark font" href="/diary/lunchOne.jsp?diaryDate=<%=diaryDate%>">점심 메뉴 투표</a>
 					</div><br>
 					<div>
 						<form method="post" action="/diary/addCommentAction.jsp">

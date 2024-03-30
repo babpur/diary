@@ -173,7 +173,7 @@
 		
 		<a href="/diary/diaryList.jsp" style="font-size: 50px;">&#128203;</a>
 		<a href="/diary/addDiaryForm.jsp" style="font-size: 50px;">&#128395;</a>
-		<a href="/diary/lunchOne.jsp" style="font-size: 50px;">&#128395;</a>
+		<a href="/diary/statsLunch.jsp" style="font-size: 50px;">&#127857;</a>
 	</div>
 	<div class="head-container">	
 		<h1 class="font"

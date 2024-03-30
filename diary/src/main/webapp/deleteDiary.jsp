@@ -42,4 +42,6 @@
 	int row = 0;
 	
 	row = stmt.executeUpdate();
+	response.sendRedirect("/diary/diary.jsp");
+	
 %>

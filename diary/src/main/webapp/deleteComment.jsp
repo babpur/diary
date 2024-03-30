@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
-
+<%@ page import="java.net.*"%>
 <%
 	System.out.println("------------------------------");
 	System.out.println("deleteComment.jsp");		
@@ -9,20 +9,13 @@
 	Connection conn = null;
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
 	
-	String loginMember = (String)session.getAttribute("loginMember");
-	// loginMember라는 변수를 가져와서 String으로 형 변환
-	// session.getAttribute는 찾는 변수가 없다면 null을 반환한다. == login한 적이 없다.
-	// null == 로그아웃, null != 로그인 
-	System.out.println("loginMember: " + loginMember);
-	
-	//loginForm 페이지는 로그아웃 상태일 때만 출력됨.
-	if(loginMember != null){
-		// login 성공 시 diary.jsp로 redirect
-		response.sendRedirect("/diary/diary.jsp");
+	 String loginMember = (String)(session.getAttribute("loginMember"));
+	 if(loginMember == null) {
+		String errMsg = URLEncoder.encode("잘못된 접근입니다. 로그인 먼저 해 주세요.", "utf-8");
+		// 에러 메시지(한글) 인코딩
+		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg);
 		return;
-	}
-	// loginMember가 null이다.
-	// session 공간에 loginMember 변수 생성
+	 }
 	
 	int commentNo = Integer.parseInt(request.getParameter("commentNo"));
 	String diaryDate = request.getParameter("diaryDate");
@@ -47,4 +40,5 @@
 	} else {
 		System.out.println("댓글 삭제 실패");
 	}
+	response.sendRedirect("/diary/diaryOne.jsp?diaryDate=" +diaryDate);
 %>

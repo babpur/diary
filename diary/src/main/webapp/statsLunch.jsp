@@ -113,9 +113,18 @@
 		.sun {
 			color: #FF0000;
 		}
-		main {
+		.main {
 			justify-content: center;
 		 	text-align: center;
+		}
+		.tottal {
+			justify-content: center;
+		 	text-align: center;
+		}
+		.table-container {
+			justify-content: center;
+		 	text-align: center;
+		 	margin: auto;
 		}
 	</style>
 </head>
@@ -130,9 +139,13 @@
 	<div class="logout-container">
 		<a class="btn btn-outline-dark font right" href="/diary/logout.jsp">로그아웃</a>
 	</div>
-	<main>
+	<div class="link-container">
+		<a href="/diary/diary.jsp" style="font-size: 50px;">&#128197;</a>
+		<a href="/diary/diaryList.jsp" style="font-size: 50px;">&#128203;</a>
+	</div>
+	<main class="font main">
+		<h2 style="font-size:50px;">점심 메뉴 투표 결과</h2>
 		<div class="main-container font">
-		<h1>statsLunch</h1>
 		<%
 			int maxHeight = 300; // 300 * 퍼센테이지를 하면 개별 크기 구할 수 있음
 			double totalCnt = 0; //
@@ -141,10 +154,8 @@
 			}
 			rs.beforeFirst();
 		%>			
-		<div>
-			전체 투표수 : <%=(int)totalCnt%>
-		</div>
-		<table border="1">
+	
+		<table class="table-container">
 			<tr>
 				<%	
 					String[] c = {"red","orange","yellow", "green", "blue", "navy", "violet" };			
@@ -155,7 +166,8 @@
 					<td style="vertical-align: bottom;">
 						<div style="height: <%=h%>px; 
 									background-color:<%=c[i]%>;
-									text-align: center;">
+									text-align: center;
+									width: 150px;">
 							<%=rs.getInt("cnt")%>
 						</div>
 					</td>			
@@ -173,9 +185,12 @@
 				<%		
 					}
 				%>
-			</tr>		
+			</tr>
+		
 		</table>
-	
+		<div>
+			전체 투표수 : <%=(int)totalCnt%>
+		</div>	
 		</div>
 	</main>
 </body>

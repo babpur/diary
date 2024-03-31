@@ -115,6 +115,9 @@
 		table {
 			font-size: 40px;
 			width: 500px;
+			vertical-align: middle;
+			text-aling: center;
+			justify-content: center;
 		}
 		.link-container {
 			text-align: center;
@@ -126,6 +129,13 @@
 		.fieldset-container {
 			justify-content: center;
 		}
+		.table-link-container {
+			text-align: center;
+		}
+		.center {
+			text-align: center;
+		}
+		
 	</style>
 </head>
 <body>
@@ -143,11 +153,15 @@
 		<div class="row">
 			<div class="col"></div>		
 			<div class="col-7">
-				<form method="post" action="/diary/checkDateAction.jsp">
-					<table class="font">
+				
+				<fieldset class="font">
+					<legend>일기 쓰기</legend>
+					<form method="post" action="/diary/checkDateAction.jsp">
+					<table class="font center">
 						<tr>
 							<td>
-								<input type="date" name="checkDate" value="<%=checkDate%>"> <!-- type=date 날짜 인터페이스 제공 -->
+								<input type="date" name="checkDate" value="<%=checkDate%>"
+										style="width: 300px;" class="center"> <!-- type=date 날짜 인터페이스 제공 -->
 							</td>
 							<td>
 								<button class="btn btn-outline-dark font" type="submit">날짜 확인</button>
@@ -157,11 +171,9 @@
 							<td><%=msg%></td>
 						</tr>
 					</table>
-				</form>
-				<fieldset class="font">
-					<legend>일기 쓰기</legend>
+					</form>
 					<form method="get" action="/diary/addDiaryAction.jsp">
-					<table>
+					<table class= center>
 						<tr>
 							<td>날짜: </td>
 							<td class="table-box">
@@ -180,7 +192,8 @@
 						</tr>
 						<tr>
 							<td>기분: </td>
-							<td class="table-box">
+							<td class="table-box"
+								style="font-size: 30px;">
 								<input type="radio" name="feeling" value="&#128512;">&#128512;
 								<input type="radio" name="feeling" value="&#128514;">&#128514;
 								<input type="radio" name="feeling" value="&#128544;">&#128544;
@@ -196,7 +209,7 @@
 						</tr>
 						<tr>
 							<td>날씨: </td>
-							<td class="table-box">
+							<td class="table-box" style="font-size: 30px;">
 								<select name="weather">
 									<option value="맑음">맑음</option>
 									<option value="흐림">흐림</option>
@@ -211,9 +224,16 @@
 								<textarea name="content"></textarea>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								&nbsp;
+							</td>
+							<td>
+								<button class="btn btn-outline-dark font table-link-container" type="submit">작성</button>
+								<button class="btn btn-outline-dark font table-link-container" type="reset">초기화</button>
+							</td>
+						</tr>
 					</table>
-					<button class="btn btn-outline-dark font" type="submit">작성</button>
-					<button class="btn btn-outline-dark font" type="reset">초기화</button>	
 					</form>
 				</fieldset>
 			</div>

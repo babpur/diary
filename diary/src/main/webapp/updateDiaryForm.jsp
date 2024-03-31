@@ -98,9 +98,11 @@
 			font-size: 30px;
 			color: #000000;
 		}
-		html, body {
+		 html, body {
 			margin: 5;
 			padding: 5;
+			width: 100%;
+			height: 100%;
 		}
 		.head-container {
 			text-align: center;
@@ -117,24 +119,34 @@
 		}
 		fieldset {
 			justify-content: center;
-			margin-top: 10px;
 		}
 		legend {
 			font-size: 60px;
 		}
 		table {
-			font-size: 30px;
+			font-size: 40px;
+			width: 500px;
+			vertical-align: middle;
+			text-aling: center;
+			justify-content: center;
 		}
 		.link-container {
-			ext-align: right;
-		}
-		.content-container {
-			text-aling: center;
+			text-align: center;
 		}
 		.searchWord {
 			text-align: center;
 			margin-top: 10px;
 		}
+		.fieldset-container {
+			justify-content: center;
+		}
+		.table-link-container {
+			text-align: center;
+		}
+		.center {
+			text-align: center;
+		}
+		
 	</style>
 </head>
 <!-- new form -->
@@ -149,138 +161,155 @@
 	<div class="logout-container">
 		<a class="btn btn-outline-dark font right" href="/diary/logout.jsp">로그아웃</a>
 	</div>
-	
 	<div class="container">
-		<div class="row p-5">
-			<div class="col"></div>
-			<div class="col-9">
-			<fieldset class="font">
-			<legend>일기 수정</legend>
-			<form method="post" action="/diary/updateDiaryAction.jsp">
-			<table>
-			
-					<%
-						if(rs.next()){
-					%>
-			
-				<tr>
-					<td>날짜</td>
-					<td>
-						<input type="text" name="diaryDate" value="<%=diaryDate%>" readonly="readonly">
-					</td>
-				</tr>
-				<tr>
-						
-					
-					<td>기분</td>
-					<td>
+		<div class="row">
+			<div class="col"></div>		
+			<div class="col-7">
+				
+				<fieldset class="font">
+					<legend>일기 수정</legend>
+					<form method="post" action="/diary/checkDateAction.jsp">
+					<table class="font center">
+						<tr>
+							<td>
+								<input type="date" name="checkDate" value="<%=checkDate%>"
+										style="width: 300px;" class="center"> <!-- type=date 날짜 인터페이스 제공 -->
+							</td>
+							<td>
+								<button class="btn btn-outline-dark font" type="submit">날짜 확인</button>
+							</td>
+						</tr>
+						<tr>
+							<td><%=msg%></td>
+						</tr>
+					</table>
+					</form>
+					<form method="get" action="/diary/addDiaryAction.jsp">
+					<table class= center>
 						<%
-							if(rs.getString("feeling").equals("&#128512;")) {
+							if(rs.next()){
 						%>
-								<input type="radio" name="feeling" value="&#128512;" checked="checked">&#128512;
-								<input type="radio" name="feeling" value="&#128514;">&#128514;
-								<input type="radio" name="feeling" value="&#128544;">&#128544;
-								<input type="radio" name="feeling" value="&#128547;">&#128547;
-								<input type="radio" name="feeling" value="&#128564;">&#128564;
-						<%		
-							} else if(rs.getString("feeling").equals("&#128514;")) {
-						%> 
-								<input type="radio" name="feeling" value="&#128512;">&#128512;
-								<input type="radio" name="feeling" value="&#128514;" checked="checked">&#128514;
-								<input type="radio" name="feeling" value="&#128544;">&#128544;
-								<input type="radio" name="feeling" value="&#128547;">&#128547;
-								<input type="radio" name="feeling" value="&#128564;">&#128564;
-						<%		
-							} else if(rs.getString("feeling").equals("&#128544;")) {
-						%>
-								<input type="radio" name="feeling" value="&#128512;">&#128512;
-								<input type="radio" name="feeling" value="&#128514;">&#128514;
-								<input type="radio" name="feeling" value="&#128544;" checked="checked">&#128544;
-								<input type="radio" name="feeling" value="&#128547;">&#128547;
-								<input type="radio" name="feeling" value="&#128564;">&#128564;
-						<%		
-							} else if(rs.getString("feeling").equals("&#128547;")) {
-						%>
-								<input type="radio" name="feeling" value="&#128512;">&#128512;
-								<input type="radio" name="feeling" value="&#128514;">&#128514;
-								<input type="radio" name="feeling" value="&#128544;">&#128544;
-								<input type="radio" name="feeling" value="&#128547;" checked="checked">&#128547;
-								<input type="radio" name="feeling" value="&#128564;">&#128564;
-						<%		
-							} else {
-						%>
-								<input type="radio" name="feeling" value="&#128512;">&#128512;
-								<input type="radio" name="feeling" value="&#128514;">&#128514;
-								<input type="radio" name="feeling" value="&#128544;">&#128544;
-								<input type="radio" name="feeling" value="&#128547;">&#128547;
-								<input type="radio" name="feeling" value="&#128564;" checked="checked">&#128564;
-						<%		
+			
+						<tr>
+							<td>날짜</td>
+							<td class="table-box">
+								<input type="text" name="diaryDate" value="<%=diaryDate%>" readonly="readonly">
+							</td>
+						</tr>
+						<tr>
+							<td>기분</td>
+							<td class="table-box" style="font-size: 30px;">
+								<%
+									if(rs.getString("feeling").equals("&#128512;")) {
+								%>
+										<input type="radio" name="feeling" value="&#128512;" checked="checked">&#128512;
+										<input type="radio" name="feeling" value="&#128514;">&#128514;
+										<input type="radio" name="feeling" value="&#128544;">&#128544;
+										<input type="radio" name="feeling" value="&#128547;">&#128547;
+										<input type="radio" name="feeling" value="&#128564;">&#128564;
+								<%		
+									} else if(rs.getString("feeling").equals("&#128514;")) {
+								%> 
+										<input type="radio" name="feeling" value="&#128512;">&#128512;
+										<input type="radio" name="feeling" value="&#128514;" checked="checked">&#128514;
+										<input type="radio" name="feeling" value="&#128544;">&#128544;
+										<input type="radio" name="feeling" value="&#128547;">&#128547;
+										<input type="radio" name="feeling" value="&#128564;">&#128564;
+								<%		
+									} else if(rs.getString("feeling").equals("&#128544;")) {
+								%>
+										<input type="radio" name="feeling" value="&#128512;">&#128512;
+										<input type="radio" name="feeling" value="&#128514;">&#128514;
+										<input type="radio" name="feeling" value="&#128544;" checked="checked">&#128544;
+										<input type="radio" name="feeling" value="&#128547;">&#128547;
+										<input type="radio" name="feeling" value="&#128564;">&#128564;
+								<%		
+									} else if(rs.getString("feeling").equals("&#128547;")) {
+								%>
+										<input type="radio" name="feeling" value="&#128512;">&#128512;
+										<input type="radio" name="feeling" value="&#128514;">&#128514;
+										<input type="radio" name="feeling" value="&#128544;">&#128544;
+										<input type="radio" name="feeling" value="&#128547;" checked="checked">&#128547;
+										<input type="radio" name="feeling" value="&#128564;">&#128564;
+								<%		
+									} else {
+								%>
+										<input type="radio" name="feeling" value="&#128512;">&#128512;
+										<input type="radio" name="feeling" value="&#128514;">&#128514;
+										<input type="radio" name="feeling" value="&#128544;">&#128544;
+										<input type="radio" name="feeling" value="&#128547;">&#128547;
+										<input type="radio" name="feeling" value="&#128564;" checked="checked">&#128564;
+								<%		
+									}
+								%>
+								
+							</td>
+						</tr>
+						<tr>
+							<td>제목</td>
+							<td class="table-box">
+								<input type="text" name="title" value="<%=rs.getString("title")%>">
+							</td>
+						</tr>
+						<tr>
+							<td class="table-box">날씨</td>
+							<td  style="font-size: 30px;">
+								<select name="weather" style="border-radius:10px;">
+									<%
+										if(rs.getString("weather").equals("맑음")){
+									%>
+											<option value="맑음" selected>맑음</option>
+											<option value="흐림">흐림</option>
+											<option value="비">비</option>
+											<option value="눈">눈</option>
+									<% 
+										} else if (rs.getString("weather").equals("흐림")){
+									%>
+											<option value="맑음">맑음</option>
+											<option value="흐림" selected>흐림</option>
+											<option value="비">비</option>
+											<option value="눈">눈</option>
+									<% 
+										} else if (rs.getString("weather").equals("비")){
+									%>
+											<option value="맑음">맑음</option>
+											<option value="흐림">흐림</option>
+											<option value="비" selected>비</option>
+											<option value="눈">눈</option>
+									<% 	
+										} else {
+									%>
+											<option value="맑음">맑음</option>
+											<option value="흐림">흐림</option>
+											<option value="비">비</option>
+											<option value="눈" selected>눈</option>
+									<% 	
+										}
+									%>
+								</select>
+							</td>	
+						</tr>
+						<tr>
+							<td>내용</td>
+							<td>
+								<textarea name="content"><%=rs.getString("content")%></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td>
+								<button class="btn btn-outline-dark font table-link-container" type="submit">수정</button>
+								<button class="btn btn-outline-dark font table-link-container" type="reset">초기화</button>
+							</td>
+						</tr>
+						<%
 							}
 						%>
-						
-					</td>
-				</tr>
-				<tr>
-					<td>제목</td>
-					<td>
-						<input type="text" name="title" value="<%=rs.getString("title")%>">
-					</td>
-				</tr>
-				<tr>
-					<td>날씨</td>
-					<td>
-						<select name="weather" style="border-radius:10px;">
-							<%
-								if(rs.getString("weather").equals("맑음")){
-							%>
-									<option value="맑음" selected>맑음</option>
-									<option value="흐림">흐림</option>
-									<option value="비">비</option>
-									<option value="눈">눈</option>
-							<% 
-								} else if (rs.getString("weather").equals("흐림")){
-							%>
-									<option value="맑음">맑음</option>
-									<option value="흐림" selected>흐림</option>
-									<option value="비">비</option>
-									<option value="눈">눈</option>
-							<% 
-								} else if (rs.getString("weather").equals("비")){
-							%>
-									<option value="맑음">맑음</option>
-									<option value="흐림">흐림</option>
-									<option value="비" selected>비</option>
-									<option value="눈">눈</option>
-							<% 	
-								} else {
-							%>
-									<option value="맑음">맑음</option>
-									<option value="흐림">흐림</option>
-									<option value="비">비</option>
-									<option value="눈" selected>눈</option>
-							<% 	
-								}
-							%>
-						</select>
-					</td>	
-				</tr>
-				<tr>
-					<td>내용</td>
-					<td>
-						<textarea name="content"><%=rs.getString("content")%></textarea>
-					</td>
-				</tr>
-			<%		
-				}
-			%>
-			</table>
-			<button class="btn btn-outline-dark font" type="submit">수정</button>
-			<button class="btn btn-outline-dark font" type="reset">초기화</button>	
-			</form>
-			</fieldset>
-
+					</table>
+					</form>
+				</fieldset>
 			</div>
-			<div class="col"></div>		
+			<div class="col"></div>
 		</div>
 	</div>
 </body>

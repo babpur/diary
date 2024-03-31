@@ -131,8 +131,18 @@
 			text-align: center;
 		}
 		.main-container {
-			vertical-align: middle;
-			text-align: center;
+			display: table-cell;
+		}
+		
+		.msg-container {
+			justify-content: center;
+			margin: auto;
+		}
+		
+		.form-container {
+			display: flex;
+			align-items: center;
+			
 		}
 	</style>
 </head>
@@ -153,14 +163,16 @@
 			String day = diaryDate.substring(8,10);
 	%>
 	
-		<div class="mt-3">
-			투표가 완료되었습니다.<br>
+		<div class="msg-container font">
+			<div>
+			<h2>투표가 완료되었습니다.</h2>
 			<%=year%>년 <%=month%>월 <%=day%>일&nbsp;
-			점심메뉴는 '<%=rs.getString("menu")%>'입니다.
-		</div><br>
-		<div>
-			<a href="/diary/deleteLunchAction.jsp?diaryDate=<%=diaryDate%>">메뉴 삭제</a>&nbsp;&nbsp;
-			<a href="/diary/statsLunch.jsp">전체 통계</a>
+			점심 메뉴는 <b>'<%=rs.getString("menu")%>'</b>입니다.
+			</div>
+			<div>
+			<a class="btn btn-outline-dark font" href="/diary/deleteLunchAction.jsp?diaryDate=<%=diaryDate%>">투표 메뉴 삭제</a>&nbsp;&nbsp;
+			<a class="btn btn-outline-dark font" href="/diary/statsLunch.jsp">전체 통계</a>
+			</div>
 		</div>
 			<%
 				} else { // 투표 결과 없을 시 투표창 출력
@@ -177,7 +189,7 @@
 			<%
 					}
 			%>
-					<div>
+					<div class="form-container font">
 						<form method="post" action="/diary/addLunchAction.jsp?diaryDate=<%=diaryDate%>">
 							<input type="radio" name="menu" class="m-3" value="양식" id="menu1">&nbsp;
 								<label for="menu1">양식</label><br>
@@ -193,7 +205,7 @@
 							
 							<input type="radio" name="menu" class="m-3" value="기타" id="menu5">&nbsp;
 								<label for="menu5">기타</label><br><br>
-							<button class="btn">투표 완료</button>
+							<button class="btn btn-outline-dark">투표 완료</button>
 						</form>
 					</div>
 			<%

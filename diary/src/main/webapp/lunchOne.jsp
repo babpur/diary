@@ -131,19 +131,32 @@
 			text-align: center;
 		}
 		.main-container {
-			display: table-cell;
 		}
-		
 		.msg-container {
-			justify-content: center;
-			margin: auto;
+			display: flex;
+		    justify-content: center;
+		    text-align: center; 
+		    flex-direction: column; 
+		    margin: auto; 
+		    width: fit-content; 
 		}
-		
 		.form-container {
 			display: flex;
-			align-items: center;
-			
+		    justify-content: center;
+		    text-align: center; 
+		    flex-direction: column; 
+		    margin: auto; 
+		    width: fit-content; 
 		}
+		.form-head-container {
+			display: flex;
+		    justify-content: center;
+		    text-align: center; 
+		    flex-direction: column; 
+		    margin: auto; 
+		    width: fit-content; 
+		}
+		
 	</style>
 </head>
 <body>
@@ -163,51 +176,55 @@
 			String day = diaryDate.substring(8,10);
 	%>
 	
-		<div class="msg-container font">
-			<div>
-			<h2>투표가 완료되었습니다.</h2>
-			<%=year%>년 <%=month%>월 <%=day%>일&nbsp;
-			점심 메뉴는 <b>'<%=rs.getString("menu")%>'</b>입니다.
-			</div>
-			<div>
-			<a class="btn btn-outline-dark font" href="/diary/deleteLunchAction.jsp?diaryDate=<%=diaryDate%>">투표 메뉴 삭제</a>&nbsp;&nbsp;
-			<a class="btn btn-outline-dark font" href="/diary/statsLunch.jsp">전체 통계</a>
-			</div>
-		</div>
-			<%
-				} else { // 투표 결과 없을 시 투표창 출력
-			%>
-					<div>점심 메뉴 선택</div>
-			<%
-					if(msg == null) {
-			%>
-						<div></div>
-			<%			
-					} else if(msg.equals("삭제 완료")){
-			%>
-						<div>기존 투표 데이터 삭제 성공하였습니다. <br> 다시 선택해 주세요.</div>
-			<%
-					}
-			%>
-					<div class="form-container font">
-						<form method="post" action="/diary/addLunchAction.jsp?diaryDate=<%=diaryDate%>">
-							<input type="radio" name="menu" class="m-3" value="양식" id="menu1">&nbsp;
-								<label for="menu1">양식</label><br>
-								
-							<input type="radio" name="menu" class="m-3" value="일식" id="menu2">&nbsp;
-								<label for="menu2">일식</label><br>
-								
-							<input type="radio" name="menu" class="m-3" value="중식" id="menu3">&nbsp;
-								<label for="menu3">중식</label><br>
+			<div class="msg-container font">
+				<div style="font-size: 50px;">투표가 완료되었습니다.</div><br>
+				<div style="font-size: 40px;">
+				<%=year%>년 <%=month%>월 <%=day%>일&nbsp;
+				점심 메뉴는 <b>'<%=rs.getString("menu")%>'</b>입니다.
+				</div><br>
+				<div>
+					<a class="btn btn-outline-dark font" href="/diary/deleteLunchAction.jsp?diaryDate=<%=diaryDate%>">투표 메뉴 삭제</a>&nbsp;&nbsp;
+					<a class="btn btn-outline-dark font" href="/diary/statsLunch.jsp">전체 통계</a>
+				</div>
+			
+					<%
+						} else { // 투표 결과 없을 시 투표창 출력
+					%>
+							<div class="form-head-container font"
+									style="font-size: 50px;">점심 메뉴 선택</div>
+					<%
+							if(msg == null) {
+					%>
+								<div class="form-head-container font"></div>
+					<%			
+							} else if(msg.equals("삭제 완료")){
+					%>
+								<div class="form-head-container font"
+										style="font-size: 50px;">
+										기존 투표 데이터 삭제 완료하였습니다. <br> 
+										다시 선택해 주세요.</div>
+					<%
+							}
+					%>
+				<div class="form-container font" style="font-size: 40px;">
+					<form method="post" action="/diary/addLunchAction.jsp?diaryDate=<%=diaryDate%>">
+						<input type="radio" name="menu" class="m-3" value="양식" id="menu1">&nbsp;
+						<label for="menu1">양식</label><br>
 							
-							<input type="radio" name="menu" class="m-3" value="한식" id="menu4">&nbsp;
-								<label for="menu4">한식</label><br>
+						<input type="radio" name="menu" class="m-3" value="일식" id="menu2">&nbsp;
+						<label for="menu2">일식</label><br>
 							
-							<input type="radio" name="menu" class="m-3" value="기타" id="menu5">&nbsp;
-								<label for="menu5">기타</label><br><br>
-							<button class="btn btn-outline-dark">투표 완료</button>
-						</form>
-					</div>
+						<input type="radio" name="menu" class="m-3" value="중식" id="menu3">&nbsp;
+						<label for="menu3">중식</label><br>
+						
+						<input type="radio" name="menu" class="m-3" value="한식" id="menu4">&nbsp;
+						<label for="menu4">한식</label><br>
+						
+						<input type="radio" name="menu" class="m-3" value="기타" id="menu5">&nbsp;
+						<label for="menu5">기타</label><br>
+						<button class="btn btn-outline-dark" style="font-size: 30px;">투표 완료</button>
+					</form>
+				</div>
 			<%
 				}
 			%>

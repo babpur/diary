@@ -8,6 +8,7 @@
 
 	String checkDate = request.getParameter("checkDate");
 	String ck = request.getParameter("ck");
+	String dateCkMsg = request.getParameter("dateCkMsg");
 	
 	System.out.println(checkDate);
 	System.out.println(ck);
@@ -168,7 +169,16 @@
 							</td>
 						</tr>
 						<tr>
-							<td><%=msg%></td>
+							<td>
+								<%=msg%>
+								<%
+									if(dateCkMsg != null){
+								%>
+										<div><%=dateCkMsg%></div>
+								<%		
+									}
+								%>
+							</td>
 						</tr>
 					</table>
 					</form>

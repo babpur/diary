@@ -47,6 +47,8 @@
 	String weather = request.getParameter("weather");
 	String content = request.getParameter("content");
 	
+	String errorMsg = request.getParameter("errorMsg");
+	
 	System.out.println("diaryDate: "+diaryDate);
 	System.out.println("title: "+title);
 	System.out.println("weather: "+weather);
@@ -307,6 +309,13 @@
 						%>
 					</table>
 					</form>
+					<%
+						if(errorMsg != null){
+					%>
+							<div><%=errorMsg%></div>
+					<%		
+						}
+					%>
 				</fieldset>
 			</div>
 			<div class="col"></div>

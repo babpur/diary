@@ -36,6 +36,12 @@
 		System.out.println(weather);
 		System.out.println(content);
 	
+		String errorMsg = null;
+		if(diaryDate == null || diaryDate.isEmpty() || title == null || title.isEmpty()
+				|| weather == null || weather.isEmpty() || content == null || content.isEmpty()){
+			errorMsg = "정보를 입력해 주세요";
+		}
+				
 		// update 쿼리
 		// ? 4개
 		String sql = "update diary set title= ?, weather= ?, content= ?, update_date = now() where diary_date = ?";
@@ -53,10 +59,12 @@
 		int row = 0;
 		
 		row = stmt.executeUpdate(); 
-		
-		if(row == 1) {
-			response.sendRedirect("/diary/diaryOne.jsp?diaryDate="+diaryDate);
-		} else {
-			response.sendRedirect("/diary/updateDiaryForm.jsp?diaryDate="+diaryDate);			
+		if(errorMsg == null) {
+			if(row == 1) {
+				response.sendRedirect("/diary/diaryOne.jsp?diaryDate="+diaryDate);
+			} else {
+				errorMsg = URLEncoder.encode( errorMsg, "utf-8");
+				response.sendRedirect("/diary/updateDiaryForm.jsp?diaryDate=" + diaryDate + "&" + "errorMsg=" + errorMsg);			
+			}
 		}
 	%>

@@ -31,8 +31,10 @@
 	
 	if(checkDate == null || checkDate.isEmpty()){
 		dateCkMsg = "확인할 날짜를 입력해 주세요";
-		
+		dateCkMsg = URLEncoder.encode(dateCkMsg, "utf-8");
+		response.sendRedirect("/diary/addDiaryForm.jsp?dateCkMsg=" + dateCkMsg);
 	}
+
 	System.out.println(checkDate);
 	String sql = "select diary_date diaryDate from diary where diary_date=?";
 	// 해당 결과에 해당되는 날짜가 있다면 해당 날짜로는 입력이 안 됨.
@@ -46,8 +48,8 @@
 		response.sendRedirect("/diary/addDiaryForm.jsp?checkDate=" + checkDate + "&ck=F");
 	} else {
 		// 해당되는 날짜 일기 기록 가능
-		dateCkMsg = URLEncoder.encode(dateCkMsg, "utf-8");
-		response.sendRedirect("/diary/addDiaryForm.jsp?checkDate=" + checkDate + "&ck=T" + "&" + "dateCkMsg=" + dateCkMsg);
+		
+		response.sendRedirect("/diary/addDiaryForm.jsp?checkDate=" + checkDate + "&ck=T");
 	}
 	
 %>

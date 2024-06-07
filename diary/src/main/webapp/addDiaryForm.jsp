@@ -170,11 +170,14 @@
 						</tr>
 						<tr>
 							<td>
-								<%=msg%>
 								<%
 									if(dateCkMsg != null){
 								%>
 										<div><%=dateCkMsg%></div>
+								<%		
+									} else {
+								%>
+										<div><%=msg%></div>
 								<%		
 									}
 								%>

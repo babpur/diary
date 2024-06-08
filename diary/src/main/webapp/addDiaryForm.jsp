@@ -9,6 +9,7 @@
 	String checkDate = request.getParameter("checkDate");
 	String ck = request.getParameter("ck");
 	String dateCkMsg = request.getParameter("dateCkMsg");
+	String errorMsg = request.getParameter("errorMsg");
 	
 	System.out.println(checkDate);
 	System.out.println(ck);
@@ -248,6 +249,13 @@
 						</tr>
 					</table>
 					</form>
+					<%
+						if(errorMsg != null) {
+					%>
+							<div><%=errorMsg%></div>
+					<%		
+						}
+					%>
 				</fieldset>
 			</div>
 			<div class="col"></div>

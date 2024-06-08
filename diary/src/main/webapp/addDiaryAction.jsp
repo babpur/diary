@@ -6,12 +6,28 @@
 	System.out.println("------------------------------");
 	System.out.println("addDiaryAction.jsp");
 	
+	// 로그인 session
+	String loginMember = (String)(session.getAttribute("loginMember"));
+	 if(loginMember == null) {
+		String errMsg = URLEncoder.encode("잘못된 접근입니다. 로그인 먼저 해 주세요.", "utf-8");
+		// 에러 메시지(한글) 인코딩
+		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg);
+		return;
+	}
+
 	// 요청값
 	String diaryDate = request.getParameter("diaryDate");
 	String feeling = request.getParameter("feeling");
 	String title = request.getParameter("title");
 	String weather = request.getParameter("weather");
 	String content = request.getParameter("content");
+
+	String errorMsg = null;
+	
+	if(diaryDate == null || diaryDate.isEmpty() || feeling == null || feeling.isEmpty() || title == null || title.isEmpty() 
+			|| weather == null || weather.isEmpty() || content == null || content.isEmpty()) {
+		errorMsg = URLEncoder.encode("정보가 입력되지 않았습니다.", "utf-8");
+	}
 	
 	System.out.println("diaryDate: " + diaryDate);
 	System.out.println("title: " + title);
@@ -26,14 +42,6 @@
 	
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
 	
-	// 로그인 session
-	String loginMember = (String)(session.getAttribute("loginMember"));
-	 if(loginMember == null) {
-		String errMsg = URLEncoder.encode("잘못된 접근입니다. 로그인 먼저 해 주세요.", "utf-8");
-		// 에러 메시지(한글) 인코딩
-		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg);
-		return;
-	}
 	
 	// --------------------------------------------------------------------
 	
@@ -63,7 +71,7 @@
 		response.sendRedirect("/diary/diary.jsp");
 	} else {
 		System.out.println("입력 실패");
-		response.sendRedirect("/diary/addDiaryForm.jsp");
+		response.sendRedirect("/diary/addDiaryForm.jsp?errorMsg=" + errorMsg);
 	}
 	
 %>

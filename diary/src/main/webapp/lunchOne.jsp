@@ -27,6 +27,7 @@
 
 	String diaryDate = request.getParameter("diaryDate");
 	String msg = request.getParameter("msg");
+	String errorMsg = request.getParameter("errorMsg");
 	System.out.println("diaryDate: " + diaryDate);
 	
 	// 쿼리문
@@ -224,6 +225,13 @@
 						<label for="menu5">기타</label><br>
 						<button class="btn btn-outline-dark" style="font-size: 30px;">투표 완료</button>
 					</form>
+					<%
+						if(errorMsg != null){
+					%>
+							<div><%=errorMsg%></div>
+					<%		
+						}
+					%>
 				</div>
 			<%
 				}

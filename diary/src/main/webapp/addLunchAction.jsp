@@ -14,6 +14,12 @@
 	System.out.println("diaryDate: "+ diaryDate);
 	System.out.println("menu: " + menu);
 	
+	String errorMsg = null;
+	
+	if(menu == null || menu.isEmpty()) {
+		errorMsg = URLEncoder.encode("정보가 입력되지 않았습니다.", "utf-8");	
+	}
+	
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = null;
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
@@ -47,7 +53,7 @@
 		response.sendRedirect("/diary/lunchOne.jsp?diaryDate="+diaryDate);
 	} else {
 		System.out.println("투표 실패");
-		response.sendRedirect("/diary/lunchOne.jsp?diaryDate="+diaryDate);
+		response.sendRedirect("/diary/lunchOne.jsp?diaryDate="+diaryDate + "&" + "errorMsg=" + errorMsg);
 	}
 	
 %>

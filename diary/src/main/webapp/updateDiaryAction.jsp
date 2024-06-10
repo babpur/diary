@@ -39,7 +39,7 @@
 		String errorMsg = null;
 		if(diaryDate == null || diaryDate.isEmpty() || title == null || title.isEmpty()
 				|| weather == null || weather.isEmpty() || content == null || content.isEmpty()){
-			errorMsg = "정보를 입력해 주세요";
+			errorMsg = URLEncoder.encode("정보를 입력해 주세요.", "utf-8");
 		}
 				
 		// update 쿼리
@@ -63,7 +63,7 @@
 			if(row == 1) {
 				response.sendRedirect("/diary/diaryOne.jsp?diaryDate="+diaryDate);
 			} else {
-				errorMsg = URLEncoder.encode( errorMsg, "utf-8");
+				
 				response.sendRedirect("/diary/updateDiaryForm.jsp?diaryDate=" + diaryDate + "&" + "errorMsg=" + errorMsg);			
 			}
 		}

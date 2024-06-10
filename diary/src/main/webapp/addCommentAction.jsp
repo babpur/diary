@@ -19,7 +19,11 @@
 
 	String diaryDate = request.getParameter("diaryDate"); 
 	String memo = request.getParameter("memo");
-	 
+	
+	String errorMsg = null;
+	if(diaryDate == null || diaryDate.isEmpty() || memo == null || memo.isEmpty()) {
+		errorMsg = URLEncoder.encode("정보를 입력해 주세요.", "utf-8");
+	}
 	System.out.println("memo: " + memo);
 	 
 	/* INSERT INTO COMMENT(
@@ -42,8 +46,9 @@
 	// 만약 1이라면 입력 성공, 0이라면 입력된 값이 없다.
 	if(row == 1){
 		System.out.println("입력 성공");
+		response.sendRedirect("/diary/diaryOne.jsp?diaryDate=" + diaryDate);
 	} else {
 		System.out.println("입력 실패");
+		response.sendRedirect("/diary/diaryOne.jsp?diaryDate=" + diaryDate + "&" + "errorMsg=" + errorMsg);
 	}
-	response.sendRedirect("/diary/diaryOne.jsp?diaryDate=" +diaryDate);
 %>

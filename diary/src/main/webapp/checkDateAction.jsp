@@ -30,9 +30,9 @@
 	String dateCkMsg = null;
 	
 	if(checkDate == null || checkDate.isEmpty()){
-		dateCkMsg = "확인할 날짜를 입력해 주세요";
-		dateCkMsg = URLEncoder.encode(dateCkMsg, "utf-8");
+		dateCkMsg = URLEncoder.encode("확인할 날짜를 입력해 주세요", "utf-8");
 		response.sendRedirect("/diary/addDiaryForm.jsp?dateCkMsg=" + dateCkMsg);
+		return;
 	}
 
 	System.out.println(checkDate);
@@ -51,5 +51,4 @@
 		
 		response.sendRedirect("/diary/addDiaryForm.jsp?checkDate=" + checkDate + "&ck=T");
 	}
-	
 %>

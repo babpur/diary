@@ -11,8 +11,9 @@
 	String dateCkMsg = request.getParameter("dateCkMsg");
 	String errorMsg = request.getParameter("errorMsg");
 	
-	System.out.println(checkDate);
-	System.out.println(ck);
+	System.out.println("checkDate: " + checkDate);
+	System.out.println("dateCkMsg: " + dateCkMsg);
+	System.out.println("ck: " + ck);
 
 	
 	Class.forName("org.mariadb.jdbc.Driver");

@@ -66,12 +66,15 @@
 	int row = 0;
 	row = stmt.executeUpdate();
 	// 만약 1이라면 입력 성공, 0이라면 입력된 값이 없다.
-	if(row == 1){
-		System.out.println("입력 성공");
-		response.sendRedirect("/diary/diary.jsp");
-	} else {
-		System.out.println("입력 실패");
-		response.sendRedirect("/diary/addDiaryForm.jsp?errorMsg=" + errorMsg);
+	
+	if(errorMsg == null) {
+		if(row == 1){
+			System.out.println("입력 성공");
+			response.sendRedirect("/diary/diary.jsp");
+		} else {
+			System.out.println("입력 실패");
+			response.sendRedirect("/diary/addDiaryForm.jsp?errorMsg=" + errorMsg);
+		}
 	}
 	
 %>

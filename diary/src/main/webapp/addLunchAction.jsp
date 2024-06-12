@@ -48,12 +48,13 @@
 	int row = 0;
 	row = stmt.executeUpdate();
 	
-	if(row == 1){
-		System.out.println("투표 완료");
-		response.sendRedirect("/diary/lunchOne.jsp?diaryDate="+diaryDate);
-	} else {
-		System.out.println("투표 실패");
-		response.sendRedirect("/diary/lunchOne.jsp?diaryDate="+diaryDate + "&" + "errorMsg=" + errorMsg);
+	if(errorMsg == null) {
+		if(row == 1){
+			System.out.println("투표 완료");
+			response.sendRedirect("/diary/lunchOne.jsp?diaryDate="+diaryDate);
+		} else {
+			System.out.println("투표 실패");
+			response.sendRedirect("/diary/lunchOne.jsp?diaryDate="+diaryDate + "&" + "errorMsg=" + errorMsg);
+		}
 	}
-	
 %>

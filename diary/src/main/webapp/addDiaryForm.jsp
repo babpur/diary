@@ -188,7 +188,7 @@
 					</table>
 					</form>
 					<form method="get" action="/diary/addDiaryAction.jsp">
-					<table class= center>
+					<table class="center">
 						<tr>
 							<td>날짜: </td>
 							<td class="table-box">
@@ -244,7 +244,7 @@
 								&nbsp;
 							</td>
 							<td>
-								<button class="btn btn-outline-dark font table-link-container" type="submit">작성</button>
+								<button class="btn btn-outline-dark font table-link-container" type="submit" id="btn">작성</button>
 								<button class="btn btn-outline-dark font table-link-container" type="reset">초기화</button>
 							</td>
 						</tr>
@@ -262,5 +262,18 @@
 			<div class="col"></div>
 		</div>
 	</div>
+	<script>
+		window.addEventListener('load', function(){
+			let btn = document.querySelector('#btn');
+			btn.addEventListener('click', function(){
+				let checkDate = document.querySelector('[name="checkDate"]')
+				if(checkDate.value == '') {
+					alert('입력 날짜를 확인해 주세요');
+					return
+				}
+			});
+		});
+	</script>
+	
 </body>
 </html>

@@ -32,6 +32,7 @@
 	if(checkDate == null || checkDate.isEmpty()){
 		dateCkMsg = URLEncoder.encode("확인할 날짜를 입력해 주세요", "utf-8");
 		response.sendRedirect("/diary/addDiaryForm.jsp?dateCkMsg=" + dateCkMsg);
+		response.getWriter().close();
 		return;
 	}
 
@@ -43,12 +44,15 @@
 	stmt = conn.prepareStatement(sql);
 	stmt.setString(1, checkDate);
 	rs = stmt.executeQuery();
-	if(rs.next()) {
-		// 이미 존재하는 날짜이므로 기록 불가능
-		response.sendRedirect("/diary/addDiaryForm.jsp?checkDate=" + checkDate + "&ck=F");
-	} else {
-		// 해당되는 날짜 일기 기록 가능
-		
-		response.sendRedirect("/diary/addDiaryForm.jsp?checkDate=" + checkDate + "&ck=T");
+	
+	if(dateCkMsg == null) {
+		if(rs.next()) {
+			// 이미 존재하는 날짜이므로 기록 불가능
+			response.sendRedirect("/diary/addDiaryForm.jsp?checkDate=" + checkDate + "&ck=F");
+		} else {
+			// 해당되는 날짜 일기 기록 가능
+			
+			response.sendRedirect("/diary/addDiaryForm.jsp?checkDate=" + checkDate + "&ck=T" + "&dateCkMsg=" + dateCkMsg);
+		}
 	}
 %>

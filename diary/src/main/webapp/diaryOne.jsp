@@ -177,7 +177,8 @@
 							<div class="comment-container">
 								<input type="hidden" name="diaryDate" value="<%=diaryDate%>">						
 								<textarea class="ms-5" row="2" cols="50" name="memo"></textarea>
-								<button class="btn btn-outline-dark font link-container ms-5" type="submit">댓글 작성</button>
+								<button class="btn btn-outline-dark font link-container ms-5" 
+									id="commentBtn" type="submit">댓글 작성</button>
 							</div>
 						</form>
 					</div>
@@ -211,8 +212,20 @@
 				
 			</div>
 			<div class="col"></div>
-	
 		</div>
 	</div>
+	
+	<script>
+		window.addEventListenener('load', function() {
+			let commentBtn = document.querySelector('#commentBtn'); 
+			let memo = document.querySelector('[name=:memo]').value.trim();
+			if(memo === '') {
+				alert('댓글 내용을 입력해 주세요.');
+				event.preventDefault();
+				return;
+			}
+		})
+		}
+	</script>
 </body>
 </html>

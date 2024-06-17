@@ -260,8 +260,8 @@
 	</div>
 	<script>	
 		window.addEventListener('load', function() {
-	    let btn = document.querySelector('#btn');
-	    btn.addEventListener('click', function(event) {
+		    let btn = document.querySelector('#btn');
+		    btn.addEventListener('click', function(event) {
 	        let diaryDate = document.querySelector('[name="diaryDate"]').value.trim();
 	        let feeling = document.querySelector('[name="feeling"]:checked');
 	        let title = document.querySelector('[name="title"]').value.trim();

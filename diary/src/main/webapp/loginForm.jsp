@@ -134,7 +134,7 @@
 							<td><label for="memberId">아이디</label></td>
 							<td><input type="text" id="memberId" name=memberId placeholder="아이디를 입력해 주세요"></td>
 							<td rowspan="2">
-								<button class="btn btn-outline-dark font" type="submit">로그인</button>
+								<button class="btn btn-outline-dark font" id="loginBtn" type="submit">로그인</button>
 							</td>
 						</tr>
 					
@@ -159,5 +159,24 @@
 			</form>	
 		</div>	
 	</form>
+	
+	<script>
+		window.addEventListenener('load', function() {
+			let loginBtn = document.querySelector('#loginBtn'); 
+			let memberId = document.querySelector('[name=:memberId]').value.trim();
+			let memberPw = document.querySelector('[name=:memberPw]').value.trim();
+			if(memberId === '') {
+				alert('로그인 ID를 입력해 주세요.');
+				event.preventDefault();
+				return;
+			}
+			if(memberPw === '') {
+				alert('로그인 PW를 입력해 주세요.');
+				event.preventDefault();
+				return;
+			}
+		})
+		}
+	</script>
 </body>
 </html>

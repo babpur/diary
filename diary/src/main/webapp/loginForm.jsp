@@ -170,8 +170,18 @@
 				event.preventDefault();
 				return;
 			}
+			if(memberId != '[name=:memberId]') {
+				alert('로그인 ID가 일치하지 않습니다.');
+				event.preventDefault();
+				return;
+			}
 			if(memberPw === '') {
 				alert('로그인 PW를 입력해 주세요.');
+				event.preventDefault();
+				return;
+			}
+			if(memberPw != '[name=:memberPw]') {
+				alert('로그인 ID가 일치하지 않습니다.');
 				event.preventDefault();
 				return;
 			}

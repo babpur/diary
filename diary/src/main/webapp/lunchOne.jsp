@@ -180,33 +180,34 @@
 			<div class="msg-container font">
 				<div style="font-size: 50px;">투표가 완료되었습니다.</div><br>
 				<div style="font-size: 40px;">
-				<%=year%>년 <%=month%>월 <%=day%>일&nbsp;
-				점심 메뉴는 <b>'<%=rs.getString("menu")%>'</b>입니다.
+					<%=year%>년 <%=month%>월 <%=day%>일&nbsp;
+					점심 메뉴는 <b>'<%=rs.getString("menu")%>'</b>입니다.
 				</div><br>
 				<div>
 					<a class="btn btn-outline-dark font" href="/diary/deleteLunchAction.jsp?diaryDate=<%=diaryDate%>">투표 메뉴 삭제</a>&nbsp;&nbsp;
 					<a class="btn btn-outline-dark font" href="/diary/statsLunch.jsp">전체 통계</a>
 				</div>
 			
-					<%
-						} else { // 투표 결과 없을 시 투표창 출력
-					%>
-							<div class="form-head-container font"
-									style="font-size: 50px;">점심 메뉴 선택</div>
-					<%
-							if(msg == null) {
-					%>
-								<div class="form-head-container font"></div>
-					<%			
-							} else if(msg.equals("삭제 완료")){
-					%>
-								<div class="form-head-container font"
-										style="font-size: 50px;">
-										기존 투표 데이터 삭제 완료하였습니다. <br> 
-										다시 선택해 주세요.</div>
-					<%
-							}
-					%>
+				<%
+					} else { // 투표 결과 없을 시 투표창 출력
+				%>
+						<div class="form-head-container font"
+								style="font-size: 50px;">점심 메뉴 선택</div>
+				<%
+						if(msg == null) {
+				%>
+							<div class="form-head-container font"></div>
+				<%			
+					} else if(msg.equals("삭제 완료")){
+				%>
+						<div class="form-head-container font"
+								style="font-size: 50px;">
+								기존 투표 데이터 삭제 완료하였습니다. <br> 
+								다시 선택해 주세요.
+						</div>
+				<%
+					}
+				%>
 				<div class="form-container font" style="font-size: 40px;">
 					<form method="post" action="/diary/addLunchAction.jsp?diaryDate=<%=diaryDate%>">
 						<input type="radio" name="menu" class="m-3" value="양식" id="menu1">&nbsp;
@@ -223,7 +224,7 @@
 						
 						<input type="radio" name="menu" class="m-3" value="기타" id="menu5">&nbsp;
 						<label for="menu5">기타</label><br>
-						<button class="btn btn-outline-dark" style="font-size: 30px;">투표 완료</button>
+						<button id="lunchBtn" class="btn btn-outline-dark" style="font-size: 30px;">투표 완료</button>
 					</form>
 					<%
 						if(errorMsg != null){
@@ -239,7 +240,17 @@
 		</div>
 		</div>
 		<div class="col"></div>
-	</div>
-</div>
+
+	<script>
+		window.addEventListener('load', function(){
+			let lunchBtn = document.querySelector('#lunchBtn');
+			let menu = document.querySelector('[name=:menu]').value.trim();
+			if(menu === '') {
+				alert('메뉴를 선택해 주세요.');
+				event.preventDefault();
+				return;
+			}
+		});
+	</script>
 </body>
 </html>

@@ -161,32 +161,26 @@
 	</form>
 	
 	<script>
-		window.addEventListenener('load', function() {
-			let loginBtn = document.querySelector('#loginBtn'); 
-			let memberId = document.querySelector('[name=:memberId]').value.trim();
-			let memberPw = document.querySelector('[name=:memberPw]').value.trim();
-			if(memberId === '') {
+	window.addEventListener('load', function() {
+		let loginBtn = document.querySelector('#loginBtn');
+		
+		loginBtn.addEventListener('click', function(event) {
+			let memberId = document.querySelector('[name=memberId]').value.trim();
+			let memberPw = document.querySelector('[name=memberPw]').value.trim();
+			
+			if (memberId === '') {
 				alert('로그인 ID를 입력해 주세요.');
 				event.preventDefault();
 				return;
 			}
-			if(memberId != '[name=:memberId]') {
-				alert('로그인 ID가 일치하지 않습니다.');
-				event.preventDefault();
-				return;
-			}
-			if(memberPw === '') {
+			
+			if (memberPw === '') {
 				alert('로그인 PW를 입력해 주세요.');
 				event.preventDefault();
 				return;
 			}
-			if(memberPw != '[name=:memberPw]') {
-				alert('로그인 ID가 일치하지 않습니다.');
-				event.preventDefault();
-				return;
-			}
-		})
-		}
+		});
+	});
 	</script>
 </body>
 </html>

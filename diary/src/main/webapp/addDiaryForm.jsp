@@ -175,7 +175,7 @@
 								<%
 									if(dateCkMsg != null){
 								%>
-										<div><%=dateCkMsg%></div>
+										<div><%=msg%></div>
 								<%
 									}
 								%>
@@ -249,7 +249,7 @@
 					<%
 						if(errorMsg != null) {
 					%>
-							<div><%=errorMsg%></div>
+							<div><%=checkDate%></div>
 					<%		
 						}
 					%>

@@ -245,10 +245,14 @@
 		window.addEventListener('load', function(){
 			let lunchBtn = document.querySelector('#lunchBtn');
 			let menu = document.querySelector('[name=:menu]').value.trim();
-			if(menu === '') {
-				alert('메뉴를 선택해 주세요.');
-				event.preventDefault();
-				return;
+			
+			loginBtn.addEventListener('click', function(event) {
+				
+				if(menu === '') {
+					alert('메뉴를 선택해 주세요.');
+					event.preventDefault();
+					return;
+				}
 			}
 		});
 	</script>

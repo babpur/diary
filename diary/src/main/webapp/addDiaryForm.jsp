@@ -262,43 +262,43 @@
 		window.addEventListener('load', function() {
 		    let btn = document.querySelector('#btn');
 		    btn.addEventListener('click', function(event) {
-	        let diaryDate = document.querySelector('[name="diaryDate"]').value.trim();
-	        let feeling = document.querySelector('[name="feeling"]:checked');
-	        let title = document.querySelector('[name="title"]').value.trim();
-	        let weather = document.querySelector('[name="weather"]').value.trim();
-	        let content = document.querySelector('[name="content"]').value.trim();
-	
-	        if (diaryDate === '') {
-	            alert('날짜를 확인해 주세요.');
-	            event.preventDefault(); // 폼 제출 막기
-	            return;
-	        }
-	        
-	        if (!feeling) {
-	            alert('기분을 선택해 주세요.');
-	            event.preventDefault();
-	            return;
-	        }
-	        
-	        if (title === '') {
-	            alert('제목을 입력해 주세요.');
-	            event.preventDefault();
-	            return;
-	        }
-	
-	        if (weather === '') {
-	            alert('날씨를 선택해 주세요.');
-	            event.preventDefault();
-	            return;
-	        }
-	
-	        if (content === '') {
-	            alert('내용을 입력해 주세요.');
-	            event.preventDefault();
-	            return;
-	        }
-	    });
-	});
+		        let diaryDate = document.querySelector('[name="diaryDate"]').value.trim();
+		        let feeling = document.querySelector('[name="feeling"]:checked');
+		        let title = document.querySelector('[name="title"]').value.trim();
+		        let weather = document.querySelector('[name="weather"]').value.trim();
+		        let content = document.querySelector('[name="content"]').value.trim();
+		
+		        if (diaryDate === '') {
+		            alert('날짜를 확인해 주세요.');
+		            event.preventDefault(); // 폼 제출 막기
+		            return;
+		        }
+		        
+		        if (!feeling) {
+		            alert('기분을 선택해 주세요.');
+		            event.preventDefault();
+		            return;
+		        }
+		        
+		        if (title === '') {
+		            alert('제목을 입력해 주세요.');
+		            event.preventDefault();
+		            return;
+		        }
+		
+		        if (weather === '') {
+		            alert('날씨를 선택해 주세요.');
+		            event.preventDefault();
+		            return;
+		        }
+		
+		        if (content === '') {
+		            alert('내용을 입력해 주세요.');
+		            event.preventDefault();
+		            return;
+		        }
+		    });
+		});
 	</script>
 </body>
 </html>

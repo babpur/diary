@@ -218,14 +218,15 @@
 	<script>
 		window.addEventListenener('load', function() {
 			let commentBtn = document.querySelector('#commentBtn'); 
-			let memo = document.querySelector('[name=:memo]').value.trim();
-			if(memo === '') {
-				alert('댓글 내용을 입력해 주세요.');
-				event.preventDefault();
-				return;
-			}
-		})
-		}
+			btn.addEventListener('click', function(event) {
+				let memo = document.querySelector('[name=:memo]').value.trim();
+				if(memo === '') {
+					alert('댓글 내용을 입력해 주세요.');
+					event.preventDefault();
+					return;
+				}
+			});
+		});
 	</script>
 </body>
 </html>

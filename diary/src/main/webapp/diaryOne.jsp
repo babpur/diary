@@ -219,7 +219,7 @@
 		window.addEventListenener('load', function() {
 			let commentBtn = document.querySelector('#commentBtn'); 
 			btn.addEventListener('click', function(event) {
-				let memo = document.querySelector('[name=:memo]').value.trim();
+				let memo = document.querySelector('[name=memo]').value.trim();
 				if(memo === '') {
 					alert('댓글 내용을 입력해 주세요.');
 					event.preventDefault();

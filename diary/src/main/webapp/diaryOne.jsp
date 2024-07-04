@@ -223,6 +223,7 @@
 				if(memo === '') {
 					alert('댓글 내용을 입력해 주세요.');
 					event.preventDefault();
+					document.querySelector('#memo').focus();
 					return;
 				}
 			});
